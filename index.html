@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>The Glovebox &amp; Backpack Game Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f3e9d2; --paper-2:#efe2c4;
+    --ink:#2b2218; --ink-soft:#5a4d3a;
+    --rust:#b8462f; --rust-deep:#963118;
+    --teal:#2f6b5e; --teal-deep:#244f46;
+    --gold:#c89b3c; --line:#cdbb95;
+    --shadow:rgba(43,34,24,.22); --grid-line:#3a2f20;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"Hanken Grotesk",sans-serif;color:var(--ink);background-color:var(--paper);
+    background-image:
+      radial-gradient(circle at 18% 12%, rgba(184,70,47,.05), transparent 38%),
+      radial-gradient(circle at 85% 80%, rgba(47,107,94,.06), transparent 42%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+    min-height:100vh;line-height:1.5;overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:"Fraunces",serif;margin:0;line-height:1.05;}
+
+  .topbar{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#352a1d,#241c12);color:var(--paper);border-bottom:3px solid var(--gold);box-shadow:0 4px 14px var(--shadow);}
+  .topbar-inner{max-width:1000px;margin:0 auto;padding:.55rem .9rem;display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;}
+  .brand{display:flex;align-items:center;gap:.55rem;margin-right:auto;cursor:pointer;flex:none;}
+  .brand .mark{width:34px;height:34px;flex:none;border-radius:8px;background:radial-gradient(circle at 30% 25%,var(--rust),var(--rust-deep));display:grid;place-items:center;color:#fff;font-family:"Fraunces";font-weight:900;box-shadow:inset 0 0 0 2px rgba(255,255,255,.18);transform:rotate(-4deg);}
+  .brand b{font-family:"Fraunces";font-weight:900;font-size:1.02rem;letter-spacing:.2px;}
+  .brand span{display:block;font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  .navwrap{position:relative;margin-left:auto;}
+  .navbtn{font:inherit;font-weight:800;font-size:.85rem;cursor:pointer;display:flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.07);color:var(--paper);border:1.5px solid rgba(243,233,210,.35);border-radius:10px;padding:.42rem .8rem;}
+  .navbtn .cur{color:var(--gold);}
+  .navbtn .burg{font-size:1rem;line-height:1;}
+  .navdrop{display:none;position:absolute;right:0;top:calc(100% + .55rem);z-index:60;background:#241c12;border:2px solid var(--gold);border-radius:14px;box-shadow:0 12px 30px rgba(0,0,0,.4);padding:.6rem;width:min(88vw,430px);grid-template-columns:repeat(2,1fr);gap:.3rem;}
+  .navdrop.open{display:grid;}
+  .tab{font:inherit;font-weight:700;font-size:.84rem;cursor:pointer;background:transparent;color:rgba(243,233,210,.8);border:1.5px solid transparent;border-radius:9px;padding:.5rem .7rem;text-align:left;}
+  .tab:hover{color:var(--paper);background:rgba(255,255,255,.08);}
+  .tab.active{background:var(--gold);color:#241c12;}
+  .navhead{grid-column:1 / -1;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;font-weight:800;color:var(--gold);padding:.45rem .7rem .15rem;border-top:1px solid rgba(243,233,210,.15);margin-top:.2rem;}
+  .navhead:first-of-type{border-top:none;margin-top:0;}
+  .wrap{max-width:1000px;margin:0 auto;padding:1.2rem .9rem 4rem;}
+  .view{display:none;animation:rise .4s ease both;}
+  .view.active{display:block;}
+  @keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+
+  .hero{text-align:center;padding:1.6rem 0 1rem;}
+  .hero .kicker{font-size:.72rem;letter-spacing:.4em;text-transform:uppercase;color:var(--rust);font-weight:800;}
+  .hero h1{font-size:clamp(2.3rem,8vw,3.6rem);font-weight:900;margin:.3rem 0;}
+  .hero h1 em{font-style:italic;color:var(--rust);}
+  .hero p{max-width:40ch;margin:.4rem auto 0;color:var(--ink-soft);font-size:.95rem;}
+  .rule{display:flex;align-items:center;gap:.6rem;justify-content:center;margin:1rem auto;max-width:280px;color:var(--line);}
+  .rule::before,.rule::after{content:"";height:1px;flex:1;background:var(--line);}
+  .rule span{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:1rem;}
+  .game-card{text-align:left;cursor:pointer;font:inherit;color:var(--ink);background:var(--paper-2);border:2px solid var(--ink);border-radius:14px;padding:1.05rem 1.05rem .95rem;position:relative;overflow:hidden;box-shadow:5px 6px 0 var(--ink);transition:transform .14s,box-shadow .14s;}
+  .game-card:hover{transform:translate(-2px,-2px);box-shadow:8px 9px 0 var(--ink);}
+  .game-card:active{transform:translate(2px,3px);box-shadow:2px 2px 0 var(--ink);}
+  .game-card .badge{font-family:"Fraunces";font-weight:900;font-size:1.3rem;width:44px;height:44px;border-radius:10px;display:grid;place-items:center;color:#fff;margin-bottom:.65rem;transform:rotate(-3deg);}
+  .game-card h3{font-size:1.35rem;font-weight:900;}
+  .game-card p{margin:.3rem 0 0;font-size:.84rem;color:var(--ink-soft);}
+  .game-card .go{margin-top:.7rem;font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);}
+  .tip{margin-top:1.6rem;font-size:.82rem;color:var(--ink-soft);text-align:center;background:rgba(200,155,60,.13);border:1px dashed var(--line);border-radius:10px;padding:.7rem .9rem;}
+
+  .game-head{display:flex;align-items:flex-end;gap:.8rem;flex-wrap:wrap;margin-bottom:1rem;border-bottom:2px dashed var(--line);padding-bottom:.8rem;}
+  .game-head .title{margin-right:auto;}
+  .game-head h2{font-size:clamp(1.7rem,6vw,2.5rem);font-weight:900;}
+  .game-head .sub{font-size:.82rem;color:var(--ink-soft);}
+  .btn{font:inherit;font-weight:700;cursor:pointer;border-radius:10px;padding:.5rem .95rem;font-size:.86rem;border:2px solid var(--ink);background:var(--paper-2);color:var(--ink);box-shadow:3px 3px 0 var(--ink);transition:transform .1s,box-shadow .1s,background .15s;}
+  .btn:hover{background:#fff5e2;} .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink);}
+  .btn.primary{background:var(--rust);color:#fff;} .btn.primary:hover{background:var(--rust-deep);}
+  .btn.teal{background:var(--teal);color:#fff;} .btn.teal:hover{background:var(--teal-deep);}
+  .btn.sm{padding:.35rem .6rem;font-size:.78rem;box-shadow:2px 2px 0 var(--ink);}
+  .controls{display:flex;gap:.55rem;flex-wrap:wrap;align-items:center;margin-bottom:1.1rem;}
+  .seg{display:inline-flex;border:2px solid var(--ink);border-radius:10px;overflow:hidden;box-shadow:3px 3px 0 var(--ink);}
+  .seg button{font:inherit;font-weight:700;font-size:.82rem;border:none;background:var(--paper-2);color:var(--ink);padding:.45rem .8rem;cursor:pointer;border-right:2px solid var(--ink);}
+  .seg button:last-child{border-right:none;}
+  .seg button.on{background:var(--ink);color:var(--paper);}
+  .field-label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--ink-soft);margin-right:.1rem;}
+  .turn-tag{font-weight:800;font-size:.9rem;}
+  .note{font-size:.78rem;color:var(--ink-soft);}
+
+  /* sudoku */
+  .sudoku-stage{display:flex;flex-direction:column;align-items:center;gap:1rem;}
+  .sudoku-wrap{background:#fff;padding:10px;border-radius:10px;border:2px solid var(--ink);box-shadow:5px 6px 0 var(--ink);}
+  .sudoku{width:min(86vw,440px);aspect-ratio:1;position:relative;display:grid;grid-template-columns:repeat(9,1fr);grid-template-rows:repeat(9,1fr);border:3px solid var(--grid-line);background:var(--grid-line);gap:1px;}
+  .cell{background:#fff;position:relative;display:grid;place-items:center;cursor:pointer;font-size:clamp(1rem,5.2vw,1.5rem);font-weight:600;color:var(--teal-deep);user-select:none;}
+  .cell.given{color:var(--ink);font-weight:800;background:#f4eedd;}
+  .cell.sel{background:#fde7c9;box-shadow:inset 0 0 0 2px var(--rust);}
+  .cell.peer{background:#faf3df;}
+  .cell.conflict{color:#fff !important;background:var(--rust) !important;}
+  .band-v{position:absolute;top:0;bottom:0;width:2px;background:var(--grid-line);pointer-events:none;z-index:3;}
+  .band-h{position:absolute;left:0;right:0;height:2px;background:var(--grid-line);pointer-events:none;z-index:3;}
+  .cell .notes{position:absolute;inset:2px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);font-size:.5rem;color:var(--ink-soft);font-weight:600;line-height:1;}
+  .cell .notes span{display:grid;place-items:center;}
+  .pad{display:grid;grid-template-columns:repeat(5,1fr);gap:.45rem;width:min(86vw,440px);}
+  .pad button{font:inherit;font-family:"Fraunces";font-weight:700;font-size:1.3rem;padding:.55rem 0;border:2px solid var(--ink);border-radius:10px;background:var(--paper-2);box-shadow:3px 3px 0 var(--ink);cursor:pointer;color:var(--ink);}
+  .pad button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink);}
+  .pad button.erase{font-size:.78rem;font-family:"Hanken Grotesk";font-weight:800;}
+  .sudoku-msg{min-height:1.2rem;font-weight:700;font-size:.9rem;}
+  .sudoku-msg.win{color:var(--teal-deep);} .sudoku-msg.err{color:var(--rust-deep);}
+
+  /* bingo (shared by DIY) */
+  .bingo-stage{display:flex;flex-direction:column;gap:1.4rem;}
+  .bingo-card{background:#fff;border:3px solid var(--ink);border-radius:12px;overflow:hidden;box-shadow:5px 6px 0 var(--ink);max-width:480px;width:100%;margin:0 auto;page-break-inside:avoid;break-inside:avoid;}
+  .bingo-top{background:var(--rust);color:#fff;text-align:center;padding:.5rem;}
+  .bingo-top .word{display:flex;justify-content:center;gap:.1rem;}
+  .bingo-top .word b{font-family:"Fraunces";font-weight:900;font-size:clamp(1.4rem,6vw,2rem);width:1.4em;}
+  .bingo-top small{display:block;font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;opacity:.85;margin-top:.1rem;}
+  .bingo-grid{display:grid;grid-template-columns:repeat(5,1fr);}
+  .bingo-cell{aspect-ratio:1;border:1px solid var(--line);display:grid;place-items:center;text-align:center;padding:3px;font-weight:600;line-height:1.08;cursor:pointer;position:relative;color:var(--ink);transition:background .12s;overflow:hidden;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:anywhere;font-size:11px;}
+  .bingo-cell:hover{background:#fdf4e0;}
+  .bingo-cell.free{background:#f4eedd;font-family:"Fraunces";font-weight:900;font-size:.8rem;color:var(--rust);}
+  .bingo-cell.marked{background:var(--teal);color:#fff;}
+  .bingo-cell.win{background:var(--gold);color:var(--ink);}
+  .bingo-foot{text-align:center;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);padding:.35rem;border-top:1px dashed var(--line);}
+  .theme-pick{display:flex;gap:.5rem;flex-wrap:wrap;}
+  .theme-pick button{font:inherit;font-weight:700;font-size:.84rem;cursor:pointer;border:2px solid var(--ink);border-radius:999px;padding:.4rem .85rem;background:var(--paper-2);box-shadow:2px 2px 0 var(--ink);color:var(--ink);}
+  .theme-pick button.on{background:var(--teal);color:#fff;}
+  .bingo-banner{text-align:center;font-family:"Fraunces";font-weight:900;color:var(--rust);font-size:1.1rem;min-height:1.3rem;}
+  .diy-box{display:flex;flex-direction:column;gap:.6rem;max-width:560px;margin-bottom:1.1rem;}
+  .diy-box input[type=text],.diy-box textarea{font:inherit;border:2px solid var(--ink);border-radius:10px;background:#fff;padding:.55rem .7rem;box-shadow:3px 3px 0 var(--ink);color:var(--ink);}
+  .diy-box textarea{min-height:9.5rem;resize:vertical;line-height:1.45;}
+  .diy-box input:focus,.diy-box textarea:focus{outline:2px solid var(--rust);outline-offset:1px;}
+
+  /* word search */
+  .ws-stage{display:flex;flex-direction:column;align-items:center;gap:1rem;}
+  .ws-wrap{background:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:5px 6px 0 var(--ink);padding:8px;}
+  .ws-grid{display:grid;gap:0;}
+  .ws-cell{display:grid;place-items:center;font-family:"Fraunces";font-weight:600;text-transform:uppercase;cursor:pointer;user-select:none;color:var(--ink);width:var(--wsz);height:var(--wsz);font-size:calc(var(--wsz)*.5);border-radius:4px;}
+  .ws-cell.sel{background:#fde7c9;}
+  .ws-cell.found{background:var(--teal);color:#fff;}
+  .ws-cell.answer{box-shadow:inset 0 0 0 2px var(--rust);}
+  .ws-words{display:flex;flex-wrap:wrap;gap:.35rem .9rem;justify-content:center;max-width:480px;font-weight:700;font-size:.85rem;}
+  .ws-words span{padding:.05rem .1rem;}
+  .ws-words span.done{text-decoration:line-through;color:var(--ink-soft);text-decoration-color:var(--rust);}
+  .ws-msg{min-height:1.1rem;font-weight:700;color:var(--teal-deep);}
+
+  /* dots & boxes */
+  .dots-stage{display:flex;flex-direction:column;align-items:center;gap:.9rem;}
+  .dots-score{display:flex;gap:1.2rem;align-items:center;font-weight:800;flex-wrap:wrap;justify-content:center;}
+  .dots-score .ds{display:flex;align-items:center;gap:.4rem;border:2px solid var(--ink);border-radius:10px;padding:.25rem .6rem;background:var(--paper-2);box-shadow:2px 2px 0 var(--ink);}
+  .dots-score .ds.turn{background:#fff5e2;box-shadow:2px 2px 0 var(--rust);}
+  .dots-board{background:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:5px 6px 0 var(--ink);padding:16px;display:grid;--dot:15px;}
+  .dot{align-self:center;justify-self:center;width:9px;height:9px;border-radius:50%;background:var(--ink);}
+  .edge{align-self:stretch;justify-self:stretch;position:relative;cursor:pointer;width:100%;height:100%;}
+  .edge::after{content:"";position:absolute;border-radius:3px;background:transparent;transition:background .12s;}
+  .edge.h::after{left:6%;right:6%;top:50%;height:5px;transform:translateY(-50%);}
+  .edge.v::after{top:6%;bottom:6%;left:50%;width:5px;transform:translateX(-50%);}
+  .edge:hover::after{background:var(--line);}
+  .edge.set::after{background:var(--ec) !important;}
+  .box{display:grid;place-items:center;font-family:"Fraunces";font-weight:900;font-size:1.1rem;}
+
+  /* maze */
+  .maze-stage{display:flex;flex-direction:column;align-items:center;gap:.9rem;}
+  .maze-wrap{background:#fff;border:3px solid var(--ink);border-radius:6px;box-shadow:5px 6px 0 var(--ink);overflow:hidden;}
+  .maze{display:grid;font-family:"Fraunces";}
+  .mcell{position:relative;aspect-ratio:1;box-sizing:border-box;}
+  .mcell.wn{border-top:2px solid var(--ink);}
+  .mcell.ws{border-bottom:2px solid var(--ink);}
+  .mcell.we{border-right:2px solid var(--ink);}
+  .mcell.ww{border-left:2px solid var(--ink);}
+  .mcell.sol::after{content:"";position:absolute;inset:24%;border-radius:50%;background:var(--rust);}
+  .mcell.start,.mcell.end{display:grid;place-items:center;font-weight:900;color:var(--teal-deep);font-size:.7rem;}
+
+  /* tic tac toe */
+  .ttt-stage{display:flex;flex-direction:column;align-items:center;gap:.9rem;}
+  .ttt-board{display:grid;grid-template-columns:repeat(3,1fr);width:min(80vw,300px);aspect-ratio:1;background:var(--ink);gap:4px;border:4px solid var(--ink);border-radius:8px;box-shadow:5px 6px 0 var(--ink);}
+  .ttt-cell{background:#fff;display:grid;place-items:center;font-family:"Fraunces";font-weight:900;font-size:3rem;cursor:pointer;}
+  .ttt-cell.x{color:var(--rust);} .ttt-cell.o{color:var(--teal);}
+  .ttt-cell.winline{background:var(--gold);}
+  .ttt-score{display:flex;gap:1rem;font-weight:800;}
+  .ttt-score span{border:2px solid var(--ink);border-radius:10px;padding:.25rem .7rem;background:var(--paper-2);box-shadow:2px 2px 0 var(--ink);}
+  .ttt-print{display:none;}
+  .ttt-print-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14mm 18mm;}
+  .ttt-mini{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);width:78mm;height:78mm;}
+  .ttt-mini div{border:2px solid #000;}
+  .ttt-mini div:nth-child(3n){border-right:none;} .ttt-mini div:nth-child(n+7){border-bottom:none;}
+  .ttt-mini div:nth-child(1),.ttt-mini div:nth-child(2),.ttt-mini div:nth-child(3){border-top:none;}
+  .ttt-mini div:nth-child(3n+1){border-left:none;}
+
+  /* battleship */
+  .bs-stage{display:flex;flex-direction:column;align-items:center;gap:.8rem;}
+  .bs-grid{display:grid;grid-template-columns:repeat(11,1fr);width:min(92vw,440px);background:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:5px 6px 0 var(--ink);overflow:hidden;padding:6px;}
+  .bs-c{aspect-ratio:1;display:grid;place-items:center;font-size:.72rem;font-weight:800;}
+  .bs-c.hdr{color:var(--ink-soft);}
+  .bs-c.sea{background:#eef3f0;border:1px solid #d8e2dc;border-radius:4px;margin:1px;cursor:crosshair;}
+  .bs-c.sea:hover{background:#dcebe4;}
+  .bs-c.miss{background:#fff;cursor:default;}
+  .bs-c.miss::after{content:"•";color:var(--ink-soft);font-size:1rem;}
+  .bs-c.hit{background:var(--rust);cursor:default;}
+  .bs-c.hit::after{content:"✕";color:#fff;}
+  .bs-c.sunkc{background:var(--ink);} .bs-c.sunkc::after{content:"✕";color:var(--gold);}
+  .bs-info{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;font-weight:800;align-items:center;}
+  .bs-info .fleet-tag{border:2px solid var(--ink);border-radius:999px;padding:.18rem .65rem;background:var(--paper-2);box-shadow:2px 2px 0 var(--ink);font-size:.78rem;}
+  .bs-info .fleet-tag.down{background:var(--ink);color:var(--paper);text-decoration:line-through;}
+  .bs-msg{min-height:1.2rem;font-weight:800;color:var(--rust-deep);}
+  .bs-print{display:none;}
+  .bs-pwrap{display:flex;gap:8mm;justify-content:space-between;}
+  .bs-pcol{flex:1;}
+  .bs-pcol h3{font-size:13pt;margin:0 0 2mm;}
+  .bs-ptable{border-collapse:collapse;width:100%;}
+  .bs-ptable td,.bs-ptable th{border:1.5px solid #000;width:8.4mm;height:8.4mm;text-align:center;font-size:8pt;padding:0;}
+  .bs-ptable th{border:none;font-weight:800;}
+  .bs-legend{margin-top:5mm;font-size:10pt;}
+  .bs-legend .shipline{display:flex;align-items:center;gap:3mm;margin:1.5mm 0;}
+  .bs-legend .sq{display:inline-block;width:5mm;height:5mm;border:1.5px solid #000;margin-right:1mm;}
+
+  /* hangman */
+  .hm-stage{display:flex;flex-direction:column;align-items:center;gap:.9rem;}
+  .hm-setup{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;align-items:center;}
+  .hm-setup input{font:inherit;letter-spacing:.18em;border:2px solid var(--ink);border-radius:10px;background:#fff;padding:.55rem .7rem;box-shadow:3px 3px 0 var(--ink);width:min(70vw,300px);color:var(--ink);}
+  .hm-svgwrap{background:#fff;border:2px solid var(--ink);border-radius:10px;box-shadow:5px 6px 0 var(--ink);padding:10px;}
+  .hm-word{font-family:"Fraunces";font-weight:900;font-size:clamp(1.4rem,7vw,2.2rem);letter-spacing:.35em;text-align:center;min-height:2.4rem;}
+  .hm-keys{display:flex;flex-wrap:wrap;gap:.35rem;justify-content:center;max-width:480px;}
+  .hm-keys button{font:inherit;font-weight:800;width:2.2rem;height:2.5rem;border:2px solid var(--ink);border-radius:8px;background:var(--paper-2);box-shadow:2px 2px 0 var(--ink);cursor:pointer;color:var(--ink);}
+  .hm-keys button:disabled{opacity:.35;cursor:default;box-shadow:none;transform:translate(1px,1px);}
+  .hm-keys button.bad{background:var(--rust);color:#fff;}
+  .hm-keys button.good{background:var(--teal);color:#fff;}
+  .hm-msg{font-family:"Fraunces";font-weight:900;font-size:1.15rem;min-height:1.4rem;color:var(--teal-deep);}
+  .hm-msg.lose{color:var(--rust-deep);}
+  .hm-print{display:none;}
+  .hm-pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10mm 12mm;}
+  .hm-frame{border:1.5px solid #000;border-radius:2mm;padding:4mm;}
+  .hm-frame .wline{border-bottom:2px solid #000;height:14mm;margin:3mm 1mm 2mm;}
+  .hm-frame .alpha{font-size:9.5pt;letter-spacing:.25em;text-align:center;font-weight:700;}
+
+  /* license plates */
+  .plates-tools{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem;}
+  .plates-count{font-family:"Fraunces";font-weight:900;font-size:1.3rem;}
+  .plates-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.45rem;}
+  .plate{display:flex;align-items:center;gap:.5rem;font:inherit;font-weight:700;font-size:.84rem;cursor:pointer;border:2px solid var(--ink);border-radius:9px;background:#fff;box-shadow:2px 2px 0 var(--ink);padding:.45rem .55rem;color:var(--ink);text-align:left;}
+  .plate .box{width:16px;height:16px;flex:none;border:2px solid var(--ink);border-radius:4px;background:#fff;display:grid;place-items:center;font-size:.7rem;color:#fff;}
+  .plate.on{background:var(--paper-2);}
+  .plate.on .box{background:var(--teal);border-color:var(--teal);}
+  .plate.on .box::after{content:"✓";}
+
+  /* farkle */
+  .fk-rules{background:var(--paper-2);border:2px solid var(--ink);border-radius:12px;box-shadow:4px 5px 0 var(--ink);padding:1rem 1.1rem;margin-bottom:1.2rem;font-size:.88rem;}
+  .fk-rules h3{font-size:1.25rem;margin-bottom:.4rem;}
+  .fk-rules table{width:100%;border-collapse:collapse;margin:.4rem 0;}
+  .fk-rules td{padding:.28rem 0;border-bottom:1px dotted var(--line);vertical-align:top;}
+  .fk-rules td:first-child{font-weight:800;white-space:nowrap;padding-right:.8rem;color:var(--rust-deep);}
+  .fk-rules p{margin:.35rem 0;}
+  .fk-board{display:flex;flex-direction:column;gap:.7rem;}
+  .fk-row{display:flex;gap:.55rem;align-items:center;flex-wrap:wrap;background:var(--paper-2);border:2px solid var(--ink);border-radius:12px;box-shadow:3px 4px 0 var(--ink);padding:.6rem .8rem;}
+  .fk-row.lead{outline:3px solid var(--gold);}
+  .fk-row input.pname{font:inherit;font-family:"Fraunces";font-weight:900;font-size:1.05rem;background:transparent;border:none;border-bottom:2px dashed var(--line);color:var(--ink);width:8rem;padding:.05rem 0;}
+  .fk-row input.pname:focus{outline:none;border-bottom-color:var(--rust);}
+  .fk-total{font-family:"Fraunces";font-weight:900;font-size:1.5rem;min-width:4.4rem;text-align:right;}
+  .fk-add{display:flex;gap:.35rem;align-items:center;margin-left:auto;}
+  .fk-add input{font:inherit;font-weight:800;width:5.2rem;border:2px solid var(--ink);border-radius:8px;padding:.35rem .45rem;background:#fff;color:var(--ink);}
+  .farkle-print{display:none;}
+  .fk-ptable{border-collapse:collapse;width:100%;}
+  .fk-ptable th,.fk-ptable td{border:1.5px solid #000;padding:1.6mm 2mm;font-size:10pt;height:7mm;}
+  .fk-ptable th{font-family:"Fraunces";}
+
+  /* cribbage — one shared board */
+  .crib-heads{display:flex;gap:.5rem 1.4rem;flex-wrap:wrap;margin-bottom:.7rem;align-items:center;}
+  .crib-head{display:flex;align-items:center;gap:.45rem;}
+  .peg-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--ink);flex:none;}
+  input.pname{font:inherit;font-family:"Fraunces";font-weight:900;font-size:1.1rem;background:transparent;border:none;border-bottom:2px dashed var(--line);color:var(--ink);width:8.5rem;padding:.05rem 0;}
+  input.pname:focus{outline:none;border-bottom-color:var(--rust);}
+  .crib-score{font-family:"Fraunces";font-weight:900;font-size:1.5rem;}
+  .crib-score small{font-size:.8rem;color:var(--ink-soft);font-family:"Hanken Grotesk";font-weight:700;}
+  .crib-panel{background:var(--paper-2);border:2px solid var(--ink);border-radius:14px;box-shadow:4px 5px 0 var(--ink);padding:.9rem;}
+  #crib-svg,.crib-svg-bk{display:block;margin:0 auto;width:100%;max-width:480px;height:auto;}
+  .plank{fill:#fdf6e5;stroke:var(--ink);stroke-width:1.2;}
+  .laneband{stroke:none;}
+  .holec{fill:#fff;stroke:#a5936e;stroke-width:.45;}
+  .holec.tensc{stroke:var(--ink);stroke-width:.85;}
+  .holec.startc,.holec.finc{stroke:var(--ink);stroke-width:.7;}
+  .holec.finc{fill:#f3dfae;}
+  .lbl{font-family:"Hanken Grotesk",sans-serif;font-size:3px;font-weight:800;fill:var(--ink-soft);}
+  .lbl.tiny{font-size:2.6px;}
+  .lbl.skl{fill:var(--rust-deep);font-size:2.8px;}
+  .uturn{fill:none;stroke:var(--line);stroke-width:.8;stroke-dasharray:1.6 1.2;}
+  .skunkline{stroke:var(--rust);stroke-width:.7;}
+  .pegdot.backp{opacity:.45;}
+  .crib-legend{display:flex;gap:.7rem 1.1rem;flex-wrap:wrap;font-size:.74rem;color:var(--ink-soft);margin:.7rem 0 .9rem;align-items:center;}
+  .crib-legend i{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-2px;margin-right:.3rem;border:2px solid var(--line);}
+  .crib-adds{display:flex;flex-direction:column;gap:.5rem;margin-top:.6rem;}
+  .crib-add{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;}
+  .crib-add .who{font-weight:800;font-size:.85rem;min-width:6.5rem;display:flex;align-items:center;gap:.35rem;}
+  .chip{font:inherit;font-weight:800;cursor:pointer;border:2px solid var(--ink);border-radius:9px;background:#fff;padding:.35rem .55rem;min-width:2.3rem;box-shadow:2px 2px 0 var(--ink);color:var(--ink);}
+  .chip:active{transform:translate(2px,2px);box-shadow:none;}
+  .chip.minus{background:#f0e2c4;} .chip.undo{background:var(--rust);color:#fff;}
+  .win-toast{text-align:center;font-family:"Fraunces";font-weight:900;font-size:1.4rem;color:var(--teal-deep);min-height:1rem;}
+
+  details.cheat{margin-top:1rem;background:var(--paper-2);border:2px solid var(--ink);border-radius:12px;box-shadow:4px 5px 0 var(--ink);}
+  details.cheat summary{cursor:pointer;font-family:"Fraunces";font-weight:900;font-size:1.1rem;padding:.7rem 1rem;list-style:none;}
+  details.cheat summary::-webkit-details-marker{display:none;}
+  details.cheat summary::after{content:"＋";float:right;color:var(--rust);} details.cheat[open] summary::after{content:"−";}
+  .cheat-body{padding:0 1rem 1rem;font-size:.88rem;}
+  .cheat-body h4{font-family:"Fraunces";font-size:1rem;margin:.6rem 0 .25rem;}
+  .cheat-body ol{margin:.2rem 0 .6rem 1.1rem;padding:0;} .cheat-body ol li{margin:.18rem 0;}
+  .cheat-body table{width:100%;border-collapse:collapse;}
+  .cheat-body td{padding:.3rem 0;border-bottom:1px dotted var(--line);vertical-align:top;}
+  .cheat-body td:first-child{font-weight:800;white-space:nowrap;padding-right:.8rem;color:var(--rust-deep);}
+
+  /* card rules */
+  .rules-intro{color:var(--ink-soft);max-width:62ch;margin-bottom:1rem;}
+  .poker{background:var(--paper-2);border:2px solid var(--ink);border-radius:12px;box-shadow:4px 5px 0 var(--ink);padding:1rem 1.1rem;margin-bottom:1.2rem;}
+  .poker h3{font-size:1.3rem;margin-bottom:.5rem;}
+  .poker ol{margin:0;padding-left:1.4rem;}
+  .poker li{margin:.32rem 0;font-size:.9rem;}
+  .poker li b{font-weight:800;}
+  .poker .ex{color:var(--ink-soft);font-size:.84rem;}
+  .suit-r{color:var(--rust);font-weight:800;} .suit-b{color:var(--ink);font-weight:800;}
+  .rules-grid{display:flex;flex-direction:column;gap:.7rem;}
+  .ruledtl{background:var(--paper-2);border:2px solid var(--ink);border-radius:12px;box-shadow:4px 5px 0 var(--ink);}
+  .ruledtl summary{cursor:pointer;font-family:"Fraunces";font-weight:900;font-size:1.12rem;padding:.7rem 1rem;list-style:none;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;}
+  .ruledtl summary::-webkit-details-marker{display:none;}
+  .ruledtl summary .pill{font-family:"Hanken Grotesk";font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;font-weight:800;background:var(--teal);color:#fff;border-radius:999px;padding:.12rem .5rem;}
+  .ruledtl summary .pill.alt{background:var(--rust);}
+  .ruledtl summary::after{content:"＋";margin-left:auto;color:var(--rust);font-family:"Hanken Grotesk";}
+  .ruledtl[open] summary::after{content:"−";}
+  .ruledtl .body{padding:0 1.05rem 1rem;font-size:.88rem;}
+  .ruledtl .body p{margin:.35rem 0;} .ruledtl .body b{font-weight:800;color:var(--ink);}
+  .ruledtl .body ul{margin:.3rem 0 .3rem 1.1rem;padding:0;} .ruledtl .body li{margin:.18rem 0;}
+  .ruledtl .body h4{font-family:"Fraunces";font-size:.95rem;margin:.55rem 0 .15rem;}
+
+  .print-caption{display:none;}
+
+  /* dice & paper rulebook tables */
+  .ruledtl .body table{width:100%;border-collapse:collapse;margin:.35rem 0;}
+  .ruledtl .body table td{padding:.25rem 0;border-bottom:1px dotted var(--line);vertical-align:top;}
+  .ruledtl .body table td:first-child{font-weight:800;color:var(--rust-deep);white-space:nowrap;padding-right:.8rem;}
+  /* yahtzee scorecard */
+  .yz-wrap{overflow-x:auto;}
+  .yz-table{border-collapse:collapse;width:100%;min-width:360px;background:#fff;border:2px solid var(--ink);box-shadow:4px 5px 0 var(--ink);}
+  .yz-table th,.yz-table td{border:1px solid var(--line);padding:.32rem .45rem;font-size:.8rem;text-align:center;}
+  .yz-table th{background:var(--paper-2);font-family:"Fraunces";}
+  .yz-table td.cat{text-align:left;font-weight:700;white-space:nowrap;}
+  .yz-table td.how{text-align:left;color:var(--ink-soft);font-size:.72rem;white-space:nowrap;}
+  .yz-table tr.sum td{background:#f4eedd;font-weight:800;}
+  @media screen and (max-width:560px){.bs-pwrap{flex-direction:column;align-items:center;}}
+
+  /* print booklet picker */
+  .kit-panel{margin-top:1.6rem;background:var(--paper-2);border:2px solid var(--ink);border-radius:14px;box-shadow:5px 6px 0 var(--ink);padding:1.1rem 1.2rem 1.2rem;}
+  .kit-panel h3{font-size:1.4rem;font-weight:900;margin-bottom:.3rem;}
+  .kit-panel p{font-size:.84rem;color:var(--ink-soft);margin:0 0 .8rem;max-width:62ch;}
+  .kit-tools{display:flex;gap:.5rem;margin-bottom:.7rem;}
+  .kit-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.35rem .7rem;margin-bottom:.9rem;}
+  .kit-item{display:flex;align-items:center;gap:.5rem;font-weight:700;font-size:.86rem;cursor:pointer;padding:.3rem .2rem;border-radius:8px;}
+  .kit-item:hover{background:rgba(47,107,94,.08);}
+  .kit-item input{width:18px;height:18px;accent-color:var(--teal);cursor:pointer;flex:none;}
+  .kit-go{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;}
+  /* multi-copy print containers (screen-hidden) */
+  .sudoku-print,.ws-print,.maze-print{display:none;}
+  .sp-cap{font-size:9pt;color:#333;margin:0 0 3mm;font-weight:600;}
+  /* booklet builder fields */
+  #booklet{display:none;}
+  .bk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.5rem .8rem;margin-bottom:.9rem;}
+  .bk-field{display:flex;align-items:center;gap:.5rem;font-weight:700;font-size:.84rem;}
+  .bk-field label{flex:1;}
+  .bk-field input[type=number]{width:3.2rem;font:inherit;font-weight:700;border:2px solid var(--ink);border-radius:8px;padding:.3rem .4rem;background:#fff;color:var(--ink);}
+  .bk-field select{font:inherit;font-weight:700;border:2px solid var(--ink);border-radius:8px;padding:.3rem .4rem;background:#fff;color:var(--ink);max-width:8rem;}
+  .bk-field input:focus,.bk-field select:focus{outline:2px solid var(--rust);outline-offset:1px;}
+  .numin{font:inherit;font-weight:800;width:4.2rem;border:2px solid var(--ink);border-radius:9px;padding:.4rem .5rem;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--ink);}
+  .numin:focus{outline:2px solid var(--rust);outline-offset:1px;}
+  /* word hunt */
+  .bog-stage{display:flex;flex-direction:column;align-items:center;}
+  .bog-grid{display:grid;gap:.45rem;width:min(88vw,380px);}
+  .bog-tile{aspect-ratio:1;display:grid;place-items:center;background:#fff;border:2px solid var(--ink);border-radius:12px;box-shadow:3px 3px 0 var(--ink);font-family:"Fraunces";font-weight:900;font-size:clamp(1.4rem,7vw,2.1rem);}
+  .boggle-print,.crypto-print{display:none;}
+  .bog-pgrid{display:grid;gap:3mm;justify-content:center;}
+  .bog-ptile{display:grid;place-items:center;border:0.7mm solid #000;border-radius:3mm;font-family:"Fraunces";font-weight:900;font-size:26pt;}
+  .bog-score{text-align:center;font-size:10.5pt;font-weight:700;margin:5mm 0 4mm;}
+  .bog-lines{display:flex;gap:6mm;}
+  .bog-col{flex:1;height:56mm;background:repeating-linear-gradient(#fff,#fff 7.5mm,#999 7.5mm,#999 calc(7.5mm + 1px));border-bottom:1px solid #999;}
+  /* cryptograms */
+  .cy-stage{display:flex;flex-direction:column;gap:.9rem;align-items:flex-start;}
+  .cy-puz{background:#fff;border:2px solid var(--ink);border-radius:12px;box-shadow:4px 5px 0 var(--ink);padding:.9rem 1rem;max-width:100%;}
+  .cy-num{font-family:"Fraunces";font-weight:900;color:var(--rust);}
+  .cy-hint{font-size:.78rem;color:var(--ink-soft);margin:.15rem 0 .55rem;}
+  .cy-body{display:flex;flex-wrap:wrap;gap:.55rem .9rem;line-height:1;}
+  .cy-word{display:inline-flex;gap:.18rem;}
+  .cy-cell{display:inline-flex;flex-direction:column;align-items:center;width:1.15em;font-size:1rem;}
+  .cy-top{font-weight:800;font-size:.72em;color:var(--teal-deep);}
+  .cy-slot{border-bottom:2px solid var(--ink);width:100%;height:1.15em;}
+  .cy-answers{display:none;}
+  /* stepper component */
+  .stprow{display:flex;gap:.4rem .7rem;flex-wrap:wrap;align-items:center;}
+  .stp{display:inline-flex;align-items:center;gap:.3rem;border:2px solid var(--ink);border-radius:9px;background:#fff;box-shadow:2px 2px 0 var(--ink);padding:.14rem .3rem;}
+  .stp .stp-lab{font-size:.74rem;font-weight:800;color:var(--ink-soft);padding:0 .15rem;}
+  .stp .stp-b{font:inherit;font-weight:900;width:1.5rem;height:1.5rem;border:none;border-radius:6px;background:var(--paper-2);cursor:pointer;color:var(--ink);line-height:1;}
+  .stp .stp-b:active{background:var(--gold);}
+  .stp .stp-v{font-family:"Fraunces";font-weight:900;min-width:1.1rem;text-align:center;}
+  .bk-group{margin-bottom:.75rem;}
+  .bk-group .bk-gname{font-family:"Fraunces";font-weight:900;font-size:.95rem;margin-bottom:.3rem;}
+  .bk-presets{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:.9rem;}
+  .bk-pages{font-family:"Fraunces";font-weight:900;font-size:1.05rem;color:var(--teal-deep);}
+  /* ===================== PRINT : US Letter, page-filling ===================== */
+  @media print{
+    @page{size:Letter portrait;margin:10mm;}
+    html,body{height:auto !important;min-height:0 !important;margin:0 !important;padding:0 !important;}
+    body{background:#fff !important;background-image:none !important;color:#000;}
+    .topbar,.controls,.no-print,.pad,.tip,.dots-score,.ttt-score,.win-toast,.crib-legend,.crib-adds,.plates-tools,.diy-box,.bs-info,.bs-msg,.hm-setup,.hm-keys,.hm-msg,.fk-board{display:none !important;}
+    .wrap{max-width:100%;padding:0;}
+    .view{display:none !important;}
+    .view.active{display:block !important;animation:none;}
+    #booklet{display:block !important;}
+    .bk-item + .bk-item{break-before:page;page-break-before:always;}
+    .bk-rules h2{font-size:18pt;color:#000;margin:0 0 4mm;}
+    .game-head{border-color:#000;margin-bottom:4mm;padding-bottom:2.5mm;}
+    .game-head h2{color:#000;font-size:18pt;}
+    .game-head .sub{display:none;}
+    .print-caption{display:block;font-size:9pt;color:#333;margin:0 0 4mm;}
+
+    .sudoku-stage{gap:0;}
+    .sudoku-wrap{box-shadow:none;border-color:#000;padding:0;}
+    .sudoku{width:188mm;height:188mm;border-color:#000;}
+    .cell{color:#000 !important;font-size:20pt;}
+    .cell.given{background:#fff !important;}
+    .cell.sel,.cell.peer{background:#fff !important;box-shadow:none !important;}
+    .band-v,.band-h{background:#000 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .sudoku.spx{gap:0 !important;background:#fff !important;border:0.8mm solid #000 !important;}
+    .sudoku.spx .cell{border:0.2mm solid #888 !important;background:#fff !important;}
+    .sudoku.spx .cell.r3{border-top:0.7mm solid #000 !important;}
+    .sudoku.spx .cell.c3{border-left:0.7mm solid #000 !important;}
+    .sudoku-msg{display:none;}
+
+    .bingo-banner{display:none;}
+    .bingo-card{box-shadow:none;border-color:#000;max-width:180mm;margin:0 auto;}
+    .bingo-card:not(:last-child){page-break-after:always;break-after:page;}
+    .bingo-top{background:#fff !important;color:#000 !important;border-bottom:0.6mm solid #000;}
+    .bingo-top b,.bingo-top small{color:#000 !important;}
+    .bingo-cell{font-size:10pt !important;line-height:1.12 !important;padding:1mm;overflow:visible;}
+    .bingo-cell.marked,.bingo-cell.win{background:#fff !important;color:#000 !important;}
+    .bingo-cell.free{background:#fff !important;color:#000 !important;border:0.4mm solid #000;}
+
+    .ws-wrap{box-shadow:none;border-color:#000;}
+    #ws-grid{--wsz:14mm !important;}
+    .ws-cell{color:#000 !important;}
+    .ws-cell.found,.ws-cell.sel{background:#fff !important;color:#000 !important;}
+    .ws-cell.answer{box-shadow:none !important;}
+    .ws-words{font-size:12pt;margin-top:6mm;max-width:100%;}
+    .ws-words span.done{text-decoration:none;color:#000;}
+    .ws-msg{display:none;}
+
+    #dots-board{width:178mm !important;height:178mm !important;--dot:4.8mm !important;box-shadow:none;border-color:#000;padding:6mm;}
+    .edge::after,.edge.set::after{background:transparent !important;}
+    .box{background:#fff !important;color:transparent !important;}
+    .dot{width:3mm;height:3mm;}
+
+    .maze-wrap{box-shadow:none;border-color:#000;}
+    .maze{width:165mm !important;font-size:10pt;}
+    .mcell.wn,.mcell.ws,.mcell.we,.mcell.ww{border-color:#000 !important;}
+    .mcell.sol::after{display:none !important;}
+
+    .ttt-board{display:none !important;}
+    .ttt-print{display:block !important;}
+    .ttt-print-grid{margin-top:5mm;}
+    .ttt-mini div{border-color:#000 !important;}
+
+    /* battleship: two blank grids + fleet */
+    .bs-grid{display:none !important;}
+    .bs-print{display:block !important;}
+
+    /* hangman: 4 blank frames */
+    .hm-svgwrap,.hm-word{display:none !important;}
+    .hm-print{display:block !important;}
+    .hm-frame{break-inside:avoid;}
+
+    /* license plates: clean checklist */
+    .plates-grid{display:block;column-count:3;column-gap:8mm;}
+    .plate{display:flex;border:none;box-shadow:none;padding:2.6mm 0;break-inside:avoid;font-size:12.5pt;background:#fff !important;}
+    .plate .box{border:1.5px solid #000;background:#fff !important;}
+    .plate.on .box::after{content:"";}
+
+    /* farkle: rules + blank sheet */
+    .fk-rules{box-shadow:none;border-color:#000;padding:3mm 4mm;margin-bottom:4mm;font-size:9pt;}
+    .fk-rules h3{font-size:12pt;}
+    .farkle-print{display:block !important;}
+
+    /* cribbage: crisp blank SVG board fills the page */
+    .crib-panel{box-shadow:none;border-color:#000;background:#fff;padding:3mm;}
+    .crib-heads .crib-score{display:none;}
+    #crib-svg,.crib-svg-bk{height:225mm;width:auto;max-width:190mm;margin:0 auto;}
+    .plank{fill:#fff;stroke:#000;stroke-width:1.4;}
+    .laneband{fill:#fff !important;stroke:#000;stroke-width:.5;}
+    .holec{stroke:#000;stroke-width:.5;}
+    .holec.tensc{stroke-width:1;}
+    .holec.finc{fill:#fff;}
+    .lbl,.lbl.skl{fill:#000;}
+    .uturn{stroke:#000;}
+    .skunkline{stroke:#000;stroke-width:.9;}
+    .pegdot{display:none;}
+    #view-cribbage details.cheat{display:none;}
+
+    .poker,.ruledtl,details.cheat{box-shadow:none;border-color:#000;}
+    .ruledtl .body{display:block;}
+    .yz-table{box-shadow:none;border-color:#000;}
+    .yz-table th,.yz-table td{border-color:#000;height:10.5mm;font-size:10.5pt;}
+    .yz-table td.how{font-size:8pt;}
+    .yz-table th,.yz-table tr.sum td{background:#eee !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    /* multi-copy: print the generated set, hide the interactive board */
+    .sudoku-stage{display:none !important;}
+    .sudoku-print{display:block !important;}
+    .ws-stage{display:none !important;}
+    .ws-print{display:block !important;}
+    .maze-stage{display:none !important;}
+    .maze-print{display:block !important;}
+    .sp-page,.bk-item:not(.bk-rules){display:flex;flex-direction:column;align-items:center;}
+    .sp-page .sp-cap,.bk-item .sp-cap{align-self:flex-start;}
+    #view-sudoku .print-caption,#view-wordsearch .print-caption{display:none !important;}
+    .sp-page{break-inside:avoid;}
+    .sp-page + .sp-page{break-before:page;page-break-before:always;}
+    .ws-grid.wsp{--wsz:15.5mm !important;}
+    .ws-print .ws-words{font-size:12pt;margin-top:6mm;max-width:100%;}
+    /* keep each rules entry whole — push to a new page rather than split mid-game */
+    .poker{break-inside:avoid;page-break-inside:avoid;}
+    .ruledtl{break-inside:avoid;page-break-inside:avoid;margin-bottom:3mm;}
+    /* word hunt & cryptograms */
+    .bog-stage,.cy-stage{display:none !important;}
+    .boggle-print{display:block !important;}
+    .crypto-print{display:block !important;}
+    .cy-puz{box-shadow:none;border-color:#000;padding:5mm;margin-bottom:7mm;width:100%;}
+    .cy-cell{width:6.2mm;font-size:12pt;}
+    .cy-top{font-size:8.5pt;color:#000;}
+    .cy-slot{border-bottom:0.5mm solid #000;height:7mm;}
+    .cy-hint{font-size:9pt;color:#000;}
+    .cy-body{gap:3.5mm 6mm;}
+    .cy-answers{display:block;margin-top:6mm;font-size:7.5pt;transform:rotate(180deg);color:#333;}
+    .ruledtl summary::after,details.cheat summary::after{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar no-print">
+  <div class="topbar-inner">
+    <div class="brand" onclick="show('menu')"><div class="mark">G</div><div><b>Glovebox &amp; Backpack</b><span>Game Book</span></div></div>
+    <div class="navwrap">
+      <button class="navbtn" id="navbtn" onclick="toggleNav(event)" aria-haspopup="true" aria-expanded="false"><span class="burg">☰</span><span>Games</span><span class="cur" id="nav-current">Menu</span></button>
+      <nav class="navdrop" id="tabs" aria-label="All games">
+      <button class="tab active" data-tab="menu" onclick="show('menu')">🏠 Menu</button>
+      <button class="tab" data-tab="booklet" onclick="show('booklet')">🎒 Booklet Builder</button>
+      <div class="navhead">Print &amp; play</div>
+      <button class="tab" data-tab="sudoku" onclick="show('sudoku')">Sudoku</button>
+      <button class="tab" data-tab="wordsearch" onclick="show('wordsearch')">Word Search</button>
+      <button class="tab" data-tab="boggle" onclick="show('boggle')">Word Hunt</button>
+      <button class="tab" data-tab="crypto" onclick="show('crypto')">Cryptograms</button>
+      <button class="tab" data-tab="maze" onclick="show('maze')">Maze</button>
+      <button class="tab" data-tab="bingo" onclick="show('bingo')">Spotting Bingo</button>
+      <button class="tab" data-tab="diy" onclick="show('diy')">DIY Bingo</button>
+      <button class="tab" data-tab="battleship" onclick="show('battleship')">Battleship</button>
+      <button class="tab" data-tab="yahtzee" onclick="show('yahtzee')">Yahtzee Card</button>
+      <button class="tab" data-tab="plates" onclick="show('plates')">License Plates</button>
+      <div class="navhead">Keep score</div>
+      <button class="tab" data-tab="cribbage" onclick="show('cribbage')">Cribbage Board</button>
+      <div class="navhead">Rule books</div>
+      <button class="tab" data-tab="rules" onclick="show('rules')">Card Games</button>
+      <button class="tab" data-tab="dice" onclick="show('dice')">Dice Games</button>
+      <button class="tab" data-tab="paper" onclick="show('paper')">Paper &amp; Pencil</button>
+      <button class="tab" data-tab="travel" onclick="show('travel')">Car &amp; Travel</button>
+      <button class="tab" data-tab="campfire" onclick="show('campfire')">Campfire &amp; Camp</button>
+        </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- MENU -->
+  <section id="view-menu" class="view active">
+    <div class="hero">
+      <div class="kicker">Paper games for the campsite &amp; the back seat</div>
+      <h1>Play it <em>anywhere</em>.</h1>
+      <p>Built for off-grid trips: print your favorites before you leave, or tap and play right here. A pen, a deck of cards, and six dice cover everything.</p>
+    </div>
+    <div class="rule"><span>Make &amp; print</span></div>
+    <div class="cards">
+      <button class="game-card" onclick="show('sudoku')"><div class="badge" style="background:var(--teal)">9</div><h3>Sudoku</h3><p>A fresh, single-solution puzzle every time, in four difficulties.</p><div class="go">Play or print →</div></button>
+      <button class="game-card" onclick="show('bingo')"><div class="badge" style="background:var(--rust)">B</div><h3>Spotting Bingo</h3><p>Nine themes, Road Trip to Beach Day. Deal and print as many cards as your group needs.</p><div class="go">Choose a theme →</div></button>
+      <button class="game-card" onclick="show('diy')"><div class="badge" style="background:var(--rust-deep)">✎</div><h3>DIY Bingo</h3><p>Write your own list, or load any theme and tweak it — then deal cards for the whole group.</p><div class="go">Make your own →</div></button>
+      <button class="game-card" onclick="show('wordsearch')"><div class="badge" style="background:var(--gold);color:var(--ink)">W</div><h3>Word Search</h3><p>Themed letter grids. Tap two ends to capture a word, or print and hunt with a pen.</p><div class="go">Start searching →</div></button>
+      <button class="game-card" onclick="show('boggle')"><div class="badge" style="background:var(--teal-deep)">Qu</div><h3>Word Hunt</h3><p>Boggle-style letter grids, fresh every time. Three minutes, longest list wins.</p><div class="go">Shake the letters →</div></button>
+      <button class="game-card" onclick="show('crypto')"><div class="badge" style="background:var(--ink)">🔐</div><h3>Cryptograms</h3><p>Crack coded proverbs — answers print upside-down like a real puzzle book.</p><div class="go">Break the code →</div></button>
+      <button class="game-card" onclick="show('maze')"><div class="badge" style="background:var(--rust-deep)">⌘</div><h3>Mazes</h3><p>A brand-new maze on demand in three sizes, always solvable.</p><div class="go">Find the way →</div></button>
+    </div>
+    <div class="rule"><span>Print &amp; go</span></div>
+    <div class="cards">
+      <button class="game-card" onclick="show('battleship')"><div class="badge" style="background:var(--teal)">⚓</div><h3>Battleship</h3><p>The classic two-grid pencil game. Print one sheet per captain.</p><div class="go">Print a sheet →</div></button>
+      <button class="game-card" onclick="show('plates')"><div class="badge" style="background:var(--gold);color:var(--ink)">50</div><h3>License Plates</h3><p>The great American road-trip checklist. Tap each state, or print &amp; tick.</p><div class="go">Start spotting →</div></button>
+      <button class="game-card" onclick="show('yahtzee')"><div class="badge" style="background:var(--rust)">⚅</div><h3>Yahtzee Card</h3><p>A proper scorecard for the one dice game that needs one. Rules under Dice Games.</p><div class="go">Print the card →</div></button>
+    </div>
+    <div class="rule"><span>Keep score</span></div>
+    <div class="cards">
+      <button class="game-card" onclick="show('cribbage')"><div class="badge" style="background:var(--gold);color:var(--ink)">15</div><h3>Cribbage Board</h3><p>Lost your board? One shared 121-hole track for 2, 3, or 4 in teams.</p><div class="go">Peg away →</div></button>
+    </div>
+    <div class="rule"><span>Rule books</span></div>
+    <div class="cards">
+      <button class="game-card" onclick="show('rules')"><div class="badge" style="background:var(--rust)">♣</div><h3>Card Rules</h3><p>Poker hands plus complete rules for 14 games, from Gin Rummy to War.</p><div class="go">Look it up →</div></button>
+      <button class="game-card" onclick="show('dice')"><div class="badge" style="background:var(--teal-deep)">⚄</div><h3>Dice Games</h3><p>Ten games for a fistful of dice — Farkle, Yahtzee, Pig, Liar's Dice &amp; more.</p><div class="go">Roll up →</div></button>
+      <button class="game-card" onclick="show('paper')"><div class="badge" style="background:var(--ink)">✏</div><h3>Paper &amp; Pencil</h3><p>No board needed. Tic-Tac-Toe, Dots &amp; Boxes, Hangman, Sprouts, SOS…</p><div class="go">Grab a pen →</div></button>
+      <button class="game-card" onclick="show('travel')"><div class="badge" style="background:var(--teal)">🗣</div><h3>Car &amp; Travel</h3><p>Zero equipment. I Spy, 20 Questions, Buzz, Contact, Ghost &amp; more.</p><div class="go">Play out loud →</div></button>
+      <button class="game-card" onclick="show('campfire')"><div class="badge" style="background:var(--rust)">🔥</div><h3>Campfire &amp; Camp</h3><p>Charades, Werewolf, Salad Bowl, plus flashlight tag &amp; capture the flag.</p><div class="go">Circle up →</div></button>
+
+
+    </div>
+    <div class="kit-panel no-print" style="text-align:center">
+      <h3>Pack for the trip 🎒</h3>
+      <p style="max-width:60ch;margin:0 auto .9rem">Build a custom printable booklet — choose how many sudokus (by difficulty), mazes, word searches, bingo cards and more, then print the whole stack at once to clip together for the road.</p>
+      <button class="btn primary" onclick="show('booklet')">Open the booklet builder →</button>
+    </div>
+    <div class="tip">📄 <b>Heading off-grid?</b> Print your favorites before you leave — every game fills one <b>US&nbsp;Letter</b> page in portrait. In the print dialog keep <b>Scale&nbsp;=&nbsp;100%</b>, <b>Margins&nbsp;=&nbsp;Default</b>, untick “Headers &amp; footers”, and use <b>Pages&nbsp;per&nbsp;sheet&nbsp;→&nbsp;4</b> to tile small copies.</div>
+  </section>
+
+  <!-- BOOKLET -->
+  <section id="view-booklet" class="view">
+    <div class="game-head no-print"><div class="title"><h2>Booklet Builder</h2><div class="sub">Dial in exactly what you want, print the whole stack at once.</div></div></div>
+    <div class="kit-panel no-print">
+      <div class="bk-presets"><span class="field-label" style="align-self:center">Presets</span><button class="btn sm" onclick="bkPreset('day')">Day trip</button><button class="btn sm" onclick="bkPreset('haul')">Long haul</button><button class="btn sm" onclick="bkPreset('works')">The works</button><button class="btn sm" onclick="bkPreset('clear')">Clear</button></div>
+      <div class="bk-group"><div class="bk-gname">Sudoku</div><div class="stprow">
+        <span class="stp" data-key="bk-sud-easy"><span class="stp-lab">Easy</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">2</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-sud-medium"><span class="stp-lab">Medium</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">2</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-sud-hard"><span class="stp-lab">Hard</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">1</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-sud-expert"><span class="stp-lab">Expert</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span>
+      </div></div>
+      <div class="bk-group"><div class="bk-gname">Word Search</div><div class="stprow">
+        <span class="stp" data-key="bk-ws-0"><span class="stp-lab">Road Trip</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">1</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-ws-1"><span class="stp-lab">Camping</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">1</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-ws-2"><span class="stp-lab">Nature</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span>
+      </div></div>
+      <div class="bk-group"><div class="bk-gname">Maze</div><div class="stprow">
+        <span class="stp" data-key="bk-maze-s"><span class="stp-lab">Small</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">1</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-maze-m"><span class="stp-lab">Medium</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">1</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-maze-l"><span class="stp-lab">Large</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span>
+      </div></div>
+      <div class="bk-group"><div class="bk-gname">Word Hunt &amp; Cryptograms</div><div class="stprow">
+        <span class="stp" data-key="bk-bog-4"><span class="stp-lab">Hunt 4×4</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">1</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-bog-5"><span class="stp-lab">Hunt 5×5</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-cy"><span class="stp-lab">Cryptogram pages</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">1</b><button class="stp-b" data-d="1">+</button></span>
+      </div></div>
+      <div class="bk-group"><div class="bk-gname">Spotting Bingo</div><div class="stprow">
+        <span class="stp" data-key="bk-bng-0" data-max="30"><span class="stp-lab">Road Trip</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">1</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-bng-1" data-max="30"><span class="stp-lab">Camping</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-bng-2" data-max="30"><span class="stp-lab">Dinner Night</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-bng-3" data-max="30"><span class="stp-lab">Nature Walk</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-bng-4" data-max="30"><span class="stp-lab">Airport</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-bng-5" data-max="30"><span class="stp-lab">Nat’l Park</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-bng-6" data-max="30"><span class="stp-lab">Reunion</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-bng-7" data-max="30"><span class="stp-lab">Ski Day</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-bng-8" data-max="30"><span class="stp-lab">Beach Day</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span>
+      </div></div>
+      <div class="bk-group"><div class="bk-gname">Score sheets</div><div class="stprow">
+        <span class="stp" data-key="bk-bs"><span class="stp-lab">Battleship</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">1</b><button class="stp-b" data-d="1">+</button></span>
+        <span class="stp" data-key="bk-yz"><span class="stp-lab">Yahtzee</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">1</b><button class="stp-b" data-d="1">+</button></span>
+      </div></div>
+      <div class="bk-group"><div class="bk-gname">One-pagers &amp; rule books</div>
+      <div class="kit-list">
+        <label class="kit-item"><input type="checkbox" id="bk-plates" checked>License Plates</label>
+        <label class="kit-item"><input type="checkbox" id="bk-cribbage" checked>Cribbage board</label>
+        <label class="kit-item"><input type="checkbox" id="bk-rules">Card Rules (≈5 pg)</label>
+        <label class="kit-item"><input type="checkbox" id="bk-dice">Dice Games (≈3 pg)</label>
+        <label class="kit-item"><input type="checkbox" id="bk-paper">Paper &amp; Pencil (≈3 pg)</label>
+        <label class="kit-item"><input type="checkbox" id="bk-travel">Car &amp; Travel (≈3 pg)</label>
+        <label class="kit-item"><input type="checkbox" id="bk-campfire">Campfire &amp; Camp (≈3 pg)</label>
+      </div></div>
+      <div class="kit-go"><button class="btn primary" onclick="printBooklet()">🖨 Build &amp; print booklet</button><span class="bk-pages" id="bk-pages"></span><span class="note" id="bk-msg"></span></div>
+    </div>
+    <div id="booklet" aria-hidden="true"></div>
+  </section>
+
+  <!-- SUDOKU -->
+  <section id="view-sudoku" class="view">
+    <div class="game-head"><div class="title"><h2>Sudoku</h2><div class="sub">Fill every row, column &amp; box with 1–9.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print</button></div>
+    <div class="print-caption">Difficulty: <span id="sudoku-diff-label">Easy</span> — fill each row, column &amp; 3×3 box with the digits 1 through 9.</div>
+    <div class="controls"><span class="field-label">Difficulty</span><div class="seg" id="sudoku-diff"><button data-d="easy" class="on">Easy</button><button data-d="medium">Medium</button><button data-d="hard">Hard</button><button data-d="expert">Expert</button></div><button class="btn primary sm" onclick="newSudoku()">New puzzle</button><button class="btn sm" onclick="clearSudoku()">Erase mine</button><button class="btn teal sm" onclick="solveSudoku()">Reveal</button></div>
+    <div class="controls no-print"><span class="field-label">Print sheets</span><div class="stprow"><span class="stp" data-key="t-sud-easy"><span class="stp-lab">Easy</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">1</b><button class="stp-b" data-d="1">+</button></span><span class="stp" data-key="t-sud-medium"><span class="stp-lab">Medium</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span><span class="stp" data-key="t-sud-hard"><span class="stp-lab">Hard</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span><span class="stp" data-key="t-sud-expert"><span class="stp-lab">Expert</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span></div><span class="note">Fresh puzzles, one per page. Zero everywhere = one of the current difficulty.</span></div>
+    <div class="sudoku-stage"><div class="sudoku-wrap"><div class="sudoku" id="sudoku-grid"></div></div><div class="sudoku-msg" id="sudoku-msg"></div><div class="pad no-print" id="sudoku-pad"></div></div>
+    <div class="sudoku-print" id="sudoku-print"></div>
+  </section>
+
+  <!-- BINGO -->
+  <section id="view-bingo" class="view">
+    <div class="game-head"><div class="title"><h2>Spotting Bingo</h2><div class="sub">Find them, mark them, shout BINGO on five in a row.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print</button></div>
+    <div class="print-caption">Mark a square each time you spot one. Five in a row — across, down, or diagonally — wins.</div>
+    <div class="controls"><span class="field-label">Theme</span><div class="theme-pick" id="bingo-themes"></div></div>
+    <div class="controls"><span class="field-label">Cards</span><input type="number" class="numin" id="bingo-n" min="1" max="40" value="4" onchange="newBingo()"><button class="btn primary sm" onclick="newBingo()">Deal fresh cards</button><span class="note">Deal one per player — up to 40 for big groups. Printing prints exactly these cards, one per page.</span></div>
+    <div class="bingo-banner" id="bingo-banner"></div>
+    <div class="bingo-stage" id="bingo-stage"></div>
+  </section>
+
+  <!-- DIY BINGO -->
+  <section id="view-diy" class="view">
+    <div class="game-head"><div class="title"><h2>DIY Bingo</h2><div class="sub">Your list, your rules. 24+ items fills every square.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print</button></div>
+    <div class="print-caption">Mark a square each time you spot one. Five in a row — across, down, or diagonally — wins.</div>
+    <div class="diy-box no-print">
+      <input type="text" id="diy-title" value="Family Bingo" maxlength="28" aria-label="Card title">
+      <div class="controls" style="margin:0"><span class="field-label">Start from</span><select id="diy-src" class="numin" style="width:auto;box-shadow:2px 2px 0 var(--ink)"><option value="">Blank list</option></select><button class="btn sm" onclick="loadDiyTheme()">Load theme items</button><span class="note">Loads a theme into the list below so you can edit, add, or delete lines.</span></div>
+      <textarea id="diy-items" placeholder="One item per line, for example:&#10;Dad says “back in my day”&#10;A moose&#10;Someone loses a flip-flop&#10;Marshmallow catches fire&#10;…(24 lines fills a whole card; fewer leaves blanks to write in)"></textarea>
+      <div class="controls" style="margin:0">
+        <span class="note" id="diy-count">0 items — 24 fills a card</span>
+        <span class="field-label" style="margin-left:auto">Cards</span>
+        <input type="number" class="numin" id="diy-n" min="1" max="40" value="4">
+        <button class="btn primary sm" onclick="newDiy()">Deal cards</button>
+      </div>
+    </div>
+    <div class="bingo-banner" id="diy-banner"></div>
+    <div class="bingo-stage" id="diy-stage"></div>
+  </section>
+
+  <!-- WORD SEARCH -->
+  <section id="view-wordsearch" class="view">
+    <div class="game-head"><div class="title"><h2>Word Search</h2><div class="sub">Words hide across, down &amp; diagonally — even backwards.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print</button></div>
+    <div class="print-caption">Find and circle every word in the list. They run in any direction, including backwards.</div>
+    <div class="controls"><span class="field-label">Theme</span><div class="theme-pick" id="ws-themes"></div><button class="btn primary sm" onclick="newWordSearch()">New grid</button><button class="btn teal sm" onclick="revealWordSearch()">Reveal</button></div>
+    <div class="controls no-print"><span class="field-label">Print sheets</span><div class="stprow"><span class="stp" data-key="t-ws-0"><span class="stp-lab">Road Trip</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">1</b><button class="stp-b" data-d="1">+</button></span><span class="stp" data-key="t-ws-1"><span class="stp-lab">Camping</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span><span class="stp" data-key="t-ws-2"><span class="stp-lab">Nature</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span></div><span class="note">Fresh grids, one per page.</span></div>
+    <div class="ws-stage"><div class="ws-wrap"><div class="ws-grid" id="ws-grid"></div></div><div class="ws-msg" id="ws-msg"></div><div class="ws-words" id="ws-words"></div></div>
+    <div class="ws-print" id="ws-print"></div>
+  </section>
+
+  <!-- WORD HUNT -->
+  <section id="view-boggle" class="view">
+    <div class="game-head"><div class="title"><h2>Word Hunt</h2><div class="sub">Boggle-style. Three minutes, longest list wins.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print</button></div>
+    <div class="print-caption">Set a 3-minute timer. Each player writes every word they can find: 3+ letters, tracing a path through touching tiles (diagonals count), never reusing a tile in one word. Cross off words that anyone else also found, then score what's left: 3–4 letters = 1 · 5 = 2 · 6 = 3 · 7 = 5 · 8+ = 11.</div>
+    <div class="controls no-print"><span class="field-label">Size</span><div class="seg" id="bog-size"><button data-b="4" class="on">4×4</button><button data-b="5">5×5</button></div><button class="btn primary sm" onclick="newBoggle()">New letters</button></div>
+    <div class="controls no-print"><span class="field-label">Print sheets</span><div class="stprow"><span class="stp" data-key="t-bog-4"><span class="stp-lab">4×4</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">1</b><button class="stp-b" data-d="1">+</button></span><span class="stp" data-key="t-bog-5"><span class="stp-lab">5×5</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span></div><span class="note">Fresh letter grids, one per page with a write-in sheet.</span></div>
+    <div class="bog-stage no-print">
+      <div class="bog-grid" id="bog-grid"></div>
+      <div class="fk-rules" style="max-width:520px;margin-top:1rem"><h3>How to play</h3><p>Everyone hunts the same grid at once — set a <b>3-minute timer</b> and write your words secretly. A word uses <b>touching tiles</b> (including diagonals) in a chain, and can't reuse a tile. 3 letters minimum; no proper nouns.</p><p><b>Scoring:</b> cross out any word that another player also found — duplicates score zero for everyone. Then: 3–4 letters = <b>1</b> · 5 = <b>2</b> · 6 = <b>3</b> · 7 = <b>5</b> · 8+ = <b>11</b>. “Qu” counts as two letters.</p></div>
+    </div>
+    <div class="boggle-print" id="boggle-print"></div>
+  </section>
+
+  <!-- CRYPTOGRAM -->
+  <section id="view-crypto" class="view">
+    <div class="game-head"><div class="title"><h2>Cryptograms</h2><div class="sub">Crack the code — every letter has been swapped for another.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print</button></div>
+    <div class="print-caption">Each puzzle is a well-known saying with every letter substituted (A might be written as K everywhere, and so on). Use the free hint, letter patterns, and short words like A, THE, and AND to crack it. Answers are printed upside-down at the bottom.</div>
+    <div class="controls no-print"><button class="btn primary sm" onclick="newCrypto()">New puzzle</button><span class="field-label" style="margin-left:.6rem">Print sheets</span><div class="stprow"><span class="stp" data-key="t-cy"><span class="stp-lab">Pages (3 puzzles each)</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">1</b><button class="stp-b" data-d="1">+</button></span></div></div>
+    <div class="cy-stage no-print" id="cy-stage"></div>
+    <div class="crypto-print" id="crypto-print"></div>
+  </section>
+
+  <!-- MAZE -->
+  <section id="view-maze" class="view">
+    <div class="game-head"><div class="title"><h2>Maze</h2><div class="sub">Start at ▲, find your way to ★.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print</button></div>
+    <div class="print-caption">Trace a path from the ▲ (top-left) to the ★ (bottom-right) without crossing any walls.</div>
+    <div class="controls"><span class="field-label">Size</span><div class="seg" id="maze-size"><button data-m="s">Small</button><button data-m="m" class="on">Medium</button><button data-m="l">Large</button></div><button class="btn primary sm" onclick="newMaze()">New maze</button><button class="btn teal sm" id="maze-reveal-btn" onclick="toggleMazeSolution()">Reveal path</button></div>
+    <div class="controls no-print"><span class="field-label">Print sheets</span><div class="stprow"><span class="stp" data-key="t-maze-s"><span class="stp-lab">Small</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span><span class="stp" data-key="t-maze-m"><span class="stp-lab">Medium</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">1</b><button class="stp-b" data-d="1">+</button></span><span class="stp" data-key="t-maze-l"><span class="stp-lab">Large</span><button class="stp-b" data-d="-1">−</button><b class="stp-v">0</b><button class="stp-b" data-d="1">+</button></span></div><span class="note">Fresh mazes, one per page.</span></div>
+    <div class="maze-stage"><div class="maze-wrap"><div class="maze" id="maze"></div></div></div>
+    <div class="maze-print" id="maze-print"></div>
+  </section>
+
+  <!-- BATTLESHIP -->
+  <section id="view-battleship" class="view">
+    <div class="game-head"><div class="title"><h2>Battleship</h2><div class="sub">Print one sheet per player, then hunt each other's fleet with a pencil.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print this sheet</button></div>
+    <div class="print-caption">Two players, one sheet each. Secretly draw your fleet on “My fleet” (ships are straight lines — no overlaps, no diagonals). Take turns calling shots like “B-7”; mark ✕ for a hit and • for a miss on “Enemy waters”, and call out when one of your ships is sunk. First to sink the whole enemy fleet wins.</div>
+    <p class="note no-print" style="margin:-.4rem 0 1rem">Preview below — tap Print for a clean full-page version. Print two copies (or use “Pages per sheet → 2”) so each player gets one.</p>
+    <div class="bs-print" style="display:block">
+      <div class="bs-pwrap">
+        <div class="bs-pcol"><h3>My fleet</h3><table class="bs-ptable" id="bs-ptable-1"></table></div>
+        <div class="bs-pcol"><h3>Enemy waters</h3><table class="bs-ptable" id="bs-ptable-2"></table></div>
+      </div>
+      <div class="bs-legend" id="bs-legend"></div>
+    </div>
+  </section>
+
+    <!-- LICENSE PLATES -->
+  <section id="view-plates" class="view">
+    <div class="game-head"><div class="title"><h2>License Plates</h2><div class="sub">Spot a plate from every state. Tap to check it off.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print checklist</button></div>
+    <div class="print-caption">Check off each state as you spot its license plate. Hawaii on the interstate is the unicorn — good luck.</div>
+    <div class="plates-tools no-print"><span class="plates-count" id="plates-count">0 / 50</span><button class="btn sm" onclick="resetPlates()">Reset</button></div>
+    <div class="plates-grid" id="plates-grid"></div>
+  </section>
+
+  <!-- CRIBBAGE -->
+  <section id="view-cribbage" class="view">
+    <div class="game-head"><div class="title"><h2>Cribbage Board</h2><div class="sub">One board, everyone pegs. Race to 121.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print blank board</button></div>
+    <div class="print-caption">Shared cribbage board — each player or team pegs down the first street (1–60), turns at the bottom, and comes back up the second (61–120) to peg out at 121. Skunk line at 91, double-skunk at 61, bold rings every 10.</div>
+    <div class="controls"><span class="field-label">Players</span><div class="seg" id="crib-players"><button data-p="2" class="on">2</button><button data-p="3">3</button><button data-p="4">4 (teams)</button></div><button class="btn sm" onclick="resetCribbage()">Reset to 0</button></div>
+    <div class="win-toast no-print" id="crib-win"></div>
+
+    <div class="crib-heads" id="crib-heads"></div>
+    <div class="crib-panel" id="crib-panel"></div>
+    <div class="crib-legend">
+      <span>▼ everyone pegs down the left street together (1–60), U-turn, ▲ back up the right street (61–120), first to the shared 121 finish wins</span>
+      <span>bold rings every 10</span>
+      <span><b style="color:var(--rust-deep)">S</b> = skunk line (91) · <b style="color:var(--rust-deep)">SS</b> = double-skunk (61)</span>
+      <span>faded dot = back peg</span>
+    </div>
+    <div class="crib-adds" id="crib-adds"></div>
+
+    <details class="cheat" open><summary>How to play &amp; scoring</summary><div class="cheat-body">
+      <h4>The basics</h4>
+      <ol>
+        <li><b>Deal.</b> 6 cards each for 2 players (5 each for 3–4; in 3-player, one extra card goes straight to the crib). Everyone discards down to 4, into the dealer's <b>crib</b> — a bonus hand the dealer scores last.</li>
+        <li><b>Cut &amp; starter.</b> The non-dealer cuts; the dealer flips the top card as the <b>starter</b>. If it's a Jack, dealer pegs <b>2 (“his heels”)</b>.</li>
+        <li><b>The play (to 31).</b> Take turns laying cards face-up, calling the running total. You can't go past 31 — say <b>“go”</b> if you can't play; the other player pegs 1 (or 2 for landing exactly on 31), then the count resets and play continues with leftover cards.</li>
+        <li><b>The show.</b> Count each hand <em>with the starter</em>, non-dealer first, dealer last, then the dealer counts the crib too. Peg everything you score. (Counting order matters near the end of a game!)</li>
+        <li><b>Win.</b> First to peg <b>121</b> — you can win mid-count the moment your peg gets there.</li>
+      </ol>
+      <h4>Points</h4>
+      <table>
+        <tr><td>Fifteen</td><td>Any combination of cards totalling 15 = <b>2 pts</b> (faces = 10, ace = 1).</td></tr>
+        <tr><td>Pair</td><td>2 pts · three of a kind = 6 · four of a kind = 12.</td></tr>
+        <tr><td>Run</td><td>1 pt per card in a run of 3+ (4-5-6 = 3 pts). Runs can combine with pairs: 4-4-5-6 = two runs + a pair = 8.</td></tr>
+        <tr><td>Flush</td><td>4 hand cards one suit = 4; starter matches too = 5. Crib flush needs all 5.</td></tr>
+        <tr><td>Nobs</td><td>Holding the Jack matching the starter's suit = 1 pt.</td></tr>
+        <tr><td>His heels</td><td>Dealer cuts a Jack as the starter = 2 pts.</td></tr>
+        <tr><td>In the play</td><td>Make the count exactly 15 or 31 = 2 · pairs &amp; runs as laid = as above · last card / “go” = 1.</td></tr>
+      </table>
+      <h4>Skunks</h4>
+      <p>Winner reaches 121 while a loser is short of <b>91</b> (the red line) = a <b>skunk</b>, counted as two game wins. Short of <b>61</b> (the gold line) = a <b>double-skunk</b>, three wins. Bragging rights are permanent.</p>
+      <h4>Teams (4 players)</h4>
+      <p>Partners sit across from each other and share one lane on the board — either partner pegs the team's points. Deal 5 cards each; everyone gives one to the crib.</p>
+    </div></details>
+  </section>
+
+  <!-- YAHTZEE -->
+  <section id="view-yahtzee" class="view">
+    <div class="game-head"><div class="title"><h2>Yahtzee Scorecard</h2><div class="sub">Five dice, thirteen boxes, three rolls a turn. Full rules under Dice Games.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print scorecard</button></div>
+    <div class="print-caption">Each turn: roll all 5 dice up to 3 times, keeping the dice you like between rolls, then write your result in any one empty box. Upper-section bonus is 35 points if your Aces-through-Sixes total reaches 63. Highest grand total wins. Print one card per game (six players fit).</div>
+    <div class="yz-wrap"><table class="yz-table" id="yz-table"></table></div>
+  </section>
+
+    <!-- DICE GAMES -->
+  <section id="view-dice" class="view">
+    <div class="game-head"><div class="title"><h2>Dice Games</h2><div class="sub">A fistful of dice and something to keep score on.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print</button></div>
+    <p class="rules-intro">Nearly all of these run on five or six dice — borrow them from any board game in the closet — plus a scrap of paper for totals. Tap a title to expand.</p>
+
+    <div class="rules-grid">
+      <details class="ruledtl"><summary>Farkle <span class="pill">2+ players · 6 dice</span></summary><div class="body">
+        <h4>How a turn works</h4><p>Roll all <b>six dice</b>. You must set aside at least one <b>scoring die</b> (see table). Then choose: <b>bank</b> what you've built this turn and pass, or <b>re-roll the rest</b> to add more. If a roll shows <em>no</em> scoring dice at all, that's a <b>FARKLE</b> — you lose everything unbanked this turn and play passes on.</p>
+        <p>If all six dice end up scoring (“<b>hot dice</b>”), scoop them all up and keep rolling the same turn. You need <b>500 in a single turn</b> to get on the board the first time.</p>
+        <h4>Scoring</h4>
+        <table>
+          <tr><td>Single 1</td><td>100</td></tr>
+          <tr><td>Single 5</td><td>50</td></tr>
+          <tr><td>Three 1s</td><td>1,000</td></tr>
+          <tr><td>Three of a kind (2–6)</td><td>face × 100 (three 4s = 400)</td></tr>
+          <tr><td>Four of a kind</td><td>1,000</td></tr>
+          <tr><td>Five of a kind</td><td>2,000</td></tr>
+          <tr><td>Six of a kind</td><td>3,000</td></tr>
+          <tr><td>Run 1-2-3-4-5-6</td><td>1,500</td></tr>
+          <tr><td>Three pairs</td><td>1,500</td></tr>
+          <tr><td>Two triplets</td><td>2,500</td></tr>
+        </table>
+        <h4>Winning</h4><p>First to bank <b>10,000</b> triggers one final turn for everyone else; highest total then wins. Dice only count in the roll where they appear — you can't combine across rolls. House variants abound (some penalise three farkles in a row); agree before you start.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Yahtzee <span class="pill">1+ players · 5 dice</span></summary><div class="body">
+        <p>Use the printable <b>Yahtzee scorecard</b> tab for the boxes.</p>
+        <h4>How a turn works</h4><p>Roll all 5 dice. You may re-roll any or all of them up to <b>two more times</b> (three rolls total), keeping what you like between rolls. Then you <b>must</b> record a score in one empty box — even a zero if nothing fits.</p>
+        <h4>The boxes</h4>
+        <ul>
+          <li><b>Upper section</b> (Aces–Sixes): add up only that number. Reach <b>63 total</b> up here for a <b>35-point bonus</b>.</li>
+          <li><b>3 / 4 of a kind</b>: sum of all five dice. <b>Full house</b>: 25. <b>Small straight</b> (4 in a row): 30. <b>Large straight</b> (5 in a row): 40. <b>Yahtzee</b> (5 alike): 50. <b>Chance</b>: sum of all dice, anything goes.</li>
+          <li>Extra Yahtzees after the first score a <b>+100 bonus</b> each.</li>
+        </ul>
+        <h4>Winning</h4><p>Thirteen turns fills the card. Add it all up — highest <b>grand total</b> wins.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Ship, Captain &amp; Crew <span class="pill">2+ · 5 dice</span></summary><div class="body">
+        <p>Each turn you get <b>three rolls</b> and must collect, <em>in order</em>, a <b>6 (ship)</b>, a <b>5 (captain)</b>, and a <b>4 (crew)</b> — you can't keep the 5 until you've set a 6, nor the 4 until you have the 5. Once you've got 6-5-4, the other two dice are your <b>cargo</b>; their pip total is your score. You may stop early to protect a good cargo. Highest cargo wins the round (no ship-captain-crew = no score). First to an agreed number of rounds, or play for chips.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Pig <span class="pill">2+ · 1 die</span></summary><div class="body">
+        <p>The classic press-your-luck warm-up. On your turn, roll one die repeatedly, adding each result to your <b>running turn total</b>. Stop and <b>bank</b> whenever you like. But roll a <b>1</b> and you lose the entire turn total and pass the die. First to <b>100</b> wins.</p>
+        <p class="note">Two-dice variant: a single 1 loses the turn; <b>double 1s</b> wipe out your whole score; any other double means you must roll again.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Threes <span class="pill">2+ · 5 dice</span></summary><div class="body">
+        <p><b>Low score wins.</b> Roll all five dice; set aside at least one, then re-roll the rest, repeating until all five are set. <b>Threes count as zero</b> — they're gold. Add up your kept dice; lowest total takes the round. Play an agreed number of rounds and total them, or play to a target like “first to lose” over several hands.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Drop Dead <span class="pill">2+ · 5 dice</span></summary><div class="body">
+        <p>Roll all five dice. If the roll contains <b>any 2s or 5s</b>, those dice “die” (set them aside out of play) and you score <b>nothing</b> for that roll. If it contains no 2s or 5s, add the pips to your score. Either way, re-roll the surviving dice and continue until every die has died. Highest total when you've “dropped dead” wins — it swings wildly, which is the fun.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Going to Boston <span class="pill">2+ · 3 dice</span></summary><div class="body">
+        <p>On your turn, roll three dice and keep the highest. Re-roll the other two and keep the higher. Roll the last die once. Your three kept dice add up to your score for the round (“going to Boston”). Highest score wins the round and scores a point; play to a set number of points. Dead simple, great for little kids.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Liar's Dice <span class="pill alt">2+ · 5 dice each + cups</span></summary><div class="body">
+        <h4>Setup</h4><p>Everyone gets <b>5 dice</b> and a cup. Roll under the cup and peek at your own dice only.</p>
+        <h4>Play</h4><p>Players take turns making a <b>bid</b> about all the dice on the table — e.g. “four 5s”, meaning at least four 5s exist among everyone. Each new bid must raise either the quantity or the face value. <b>1s are usually wild</b> (count as any face). Instead of bidding, you may call <b>“liar!”</b> on the previous bid: reveal all dice. If the bid was true, the challenger loses a die; if false, the bidder does.</p>
+        <h4>Winning</h4><p>Lose all your dice and you're out. Last player with dice wins. Bluffing is the whole point.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Bunco <span class="pill">groups · 3 dice</span></summary><div class="body">
+        <p>A light, sociable game for a crowd, played in <b>six rounds</b>. In round 1 you're rolling for <b>1s</b>, round 2 for <b>2s</b>, and so on. Roll all three dice: each die matching the round number = <b>1 point</b>, and you keep rolling. <b>Three of the target number = “Bunco!” = 21 points</b>; three of any other matching number = 5. Miss entirely and your turn ends. Play in teams, rotate, and total points across the six rounds — most wins.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Mexico <span class="pill">2+ · 2 dice</span></summary><div class="body">
+        <p>An elimination round-game. Each player gets one roll of two dice. Read the higher die as tens: 6&amp;2 = 62. Ranking from the top: <b>2-1 = “Mexico” (highest)</b>, then doubles (6-6 down to 1-1), then the ordinary two-digit numbers (65, 64…). The <b>lowest roll each round loses a life</b> (start everyone with three). Last player standing wins. A fast, loud filler.</p>
+      </div></details>
+      <details class="ruledtl"><summary>Beetle <span class="pill">2+ · kids · 1 die</span></summary><div class="body">
+        <p>A roll-and-draw race — everyone needs paper and a pencil. Take turns rolling one die; each number lets you draw one beetle part, and you must roll a <b>6 for the body first</b> (nothing attaches to nothing!).</p>
+        <table>
+          <tr><td>6</td><td>Body (must come first)</td></tr>
+          <tr><td>5</td><td>Head (needs the body)</td></tr>
+          <tr><td>4</td><td>A leg — you need six</td></tr>
+          <tr><td>3</td><td>An antenna (needs the head; you need two)</td></tr>
+          <tr><td>2</td><td>An eye (needs the head; you need two)</td></tr>
+          <tr><td>1</td><td>The tail</td></tr>
+        </table>
+        <p>First complete beetle — body, head, tail, 6 legs, 2 eyes, 2 antennae — shouts <b>“Beetle!”</b> and wins. The drawings are the real prize.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Shut the Box (paper) <span class="pill">1+ · 2 dice</span></summary><div class="body">
+        <p>No box needed — write the numbers <b>1 through 9</b> on paper. On your turn, roll two dice and cross off <b>any combination of open numbers that adds up to the roll</b> (roll 8: cross the 8, or 6+2, or 5+3, or 1+3+4). Keep rolling and crossing until no combination works; your score is the sum of what's left <b>uncrossed</b> — low is good. Once 7, 8, and 9 are all crossed, you may roll just one die. Cross off everything and you've <b>“shut the box”</b> — an instant win. Otherwise, lowest leftover total takes the round.</p>
+      </div></details>
+    </div>
+  </section>
+
+    <!-- PAPER GAMES -->
+  <section id="view-paper" class="view">
+    <div class="game-head"><div class="title"><h2>Paper &amp; Pencil Games</h2><div class="sub">No board, no pieces — draw it on a napkin.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print</button></div>
+    <p class="rules-intro">Every one of these you can set up anywhere with a pen and any scrap of paper — no printout required. Tap a title to expand.</p>
+
+    <div class="rules-grid">
+      <details class="ruledtl"><summary>Tic-Tac-Toe <span class="pill">2 players</span></summary><div class="body">
+        <h4>Set it up</h4><p>Draw a <b>3×3 grid</b>: two lines down, two across, like a hashtag (#).</p>
+        <h4>Play</h4><p>One player is <b>✕</b>, the other <b>◯</b>; ✕ goes first. Take turns marking an empty square. First to get <b>three in a row</b> — across, down, or diagonally — wins. Fill the grid with no winner and it's a “cat's game” (a draw).</p>
+        <p class="note">Tip: the centre and corners are strongest. Two players who both know what they're doing will always tie — which is when it's time for the giant version below.</p>
+        <h4>Bigger variant</h4><p><b>Gomoku</b>: on a large grid of squares (graph paper or hand-drawn), race to get <b>five in a row</b>. Far deeper than it looks.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Dots &amp; Boxes <span class="pill">2 players</span></summary><div class="body">
+        <h4>Set it up</h4><p>Draw a grid of dots — start with about <b>6×6</b> for a quick game, bigger for a longer one.</p>
+        <h4>Play</h4><p>Take turns drawing a single <b>horizontal or vertical line</b> between two adjacent dots. Complete the <b>fourth side of a box</b> and you claim it — write your initial inside <em>and take another turn</em>. When every box is claimed, most boxes wins.</p>
+        <h4>Strategy</h4><p>Early on, avoid drawing the <b>third</b> side of any box (it hands a free box to your opponent). The endgame trick is the <b>double-cross</b>: when forced to open a long chain, decline the last two boxes so your opponent must open the next chain for you.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Hangman <span class="pill">2+ players</span></summary><div class="body">
+        <h4>Set it up</h4><p>One player thinks of a word or phrase and draws a short <b>dash for each letter</b> (and gaps for spaces). Off to the side, jot the alphabet to cross off.</p>
+        <h4>Play</h4><p>The guesser calls letters. Correct ones get written on every matching dash. Each <b>wrong</b> guess adds one piece to a gallows drawing in this order: <b>head, body, left arm, right arm, left leg, right leg</b>. Solve the word before the figure is complete (six misses) to win; complete the figure first and the word-setter wins.</p>
+        <p class="note">Phrases, movie titles, and the names of people in the car all make great (and merciless) puzzles.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Battleship <span class="pill">2 players</span></summary><div class="body">
+        <p>Use the printable <b>Battleship</b> sheet for ready-made grids, or just draw two <b>10×10</b> grids each (label columns 1–10, rows A–J). Secretly mark your fleet on one grid — Carrier (5), Battleship (4), Cruiser (3), Submarine (3), Destroyer (2) — as straight, non-overlapping lines. Take turns calling shots like <b>“C-4”</b>; the other player says <b>hit</b> or <b>miss</b>, and announces when a ship is fully <b>sunk</b>. Track your shots on the second grid (✕ hit, • miss). First to sink the whole enemy fleet wins.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Sprouts <span class="pill">2 players</span></summary><div class="body">
+        <h4>Set it up</h4><p>Draw <b>2–4 dots</b> on a page (more dots = longer game).</p>
+        <h4>Play</h4><p>On your turn, draw a line connecting two dots (or a dot to itself), then place a <b>new dot somewhere on that line</b>. Two rules: lines may <b>never cross</b> (their own or others'), and <b>no dot may have more than three lines</b> touching it. The last player able to make a legal move <b>wins</b>. Tiny rules, surprisingly deep — a favourite of mathematicians.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>SOS <span class="pill">2 players</span></summary><div class="body">
+        <h4>Set it up</h4><p>Draw a grid — <b>5×5</b> is a good start.</p>
+        <h4>Play</h4><p>On your turn, write either an <b>S</b> or an <b>O</b> in any empty square. If you complete the sequence <b>S-O-S</b> in a straight line (any direction), draw through it, score a point, and <b>take another turn</b>. When the grid is full, most SOS sequences wins. One placement can complete two SOSes at once — bank them both.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Bulls &amp; Cows <span class="pill">2 players</span></summary><div class="body">
+        <p>The pen-and-paper ancestor of Mastermind. One player secretly writes a <b>4-digit number with no repeated digits</b>. The other guesses; after each guess the setter reports two counts: <b>bulls</b> = right digit in the right place, <b>cows</b> = right digit in the wrong place. Use the feedback to close in. Crack the code in the fewest guesses, then swap roles. (Try 5 digits for a brutal version.)</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Categories <span class="pill">2+ players</span></summary><div class="body">
+        <p>Everyone draws the same grid: a column for each <b>category</b> (e.g. Animal, Place, Food, Name, Movie) and a few rows. Pick a random <b>letter</b> for each row. On “go”, everyone races to fill every category in that row with a word starting with that letter, within a time limit (say two minutes per letter). Score: a <b>unique</b> answer = 10 points, an answer someone else also wrote = 5, blank = 0. Most points after several letters wins. (This is the homemade version of Scattergories.)</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Word Ladder <span class="pill">1–2 players</span></summary><div class="body">
+        <p>Turn one word into another of the same length by changing <b>one letter at a time</b> — and every rung must be a real word. Classic example: <b>COLD → CORD → WORD → WARD → WARM</b>. Set a start and end word (same length) and find the shortest chain, or just race a friend from the same pair. Four-letter words make a friendly puzzle; five-letter words make a fierce one.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Nim <span class="pill">2 players</span></summary><div class="body">
+        <p>Draw a few rows of marks — a good start is rows of <b>3, 5, and 7</b>. On your turn, cross off <b>as many marks as you like from a single row</b> (at least one). Whoever crosses off the <b>very last mark wins</b>. Play the “misère” version — last mark <em>loses</em> — for an extra brain-twist. There's a mathematically perfect strategy hiding in here; finding it is half the fun.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Four-in-a-Row <span class="pill">2 players</span></summary><div class="body">
+        <p>Connect Four with a pencil. Draw a grid about <b>7 wide and 6 tall</b>. Players alternate placing their mark (✕ or ◯), but a mark must drop to the <b>lowest empty cell in its column</b>, as if gravity pulled it down. First to line up <b>four in a row</b> — horizontal, vertical, or diagonal — wins. No grid handy? It works fine on plain paper if you both respect the gravity rule.</p>
+      </div></details>
+
+    </div>
+  </section>
+
+    <!-- TRAVEL GAMES -->
+  <section id="view-travel" class="view">
+    <div class="game-head"><div class="title"><h2>Travel Games</h2><div class="sub">No screen, no paper, no pieces — just voices in a car.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print</button></div>
+    <p class="rules-intro">The ultimate off-grid games: everything here runs on nothing but the people in the vehicle. Tap a title to expand.</p>
+
+    <div class="rules-grid">
+      <details class="ruledtl"><summary>I Spy <span class="pill">any age</span></summary><div class="body">
+        <p>One person picks something they can see and says <b>“I spy with my little eye, something beginning with… B.”</b> Everyone else guesses objects starting with that letter until someone gets it; the winner spies next. For pre-readers, use <b>colours</b> instead (“…something blue”). Moving-car version: the object has to stay in view long enough to guess, which keeps it honest.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Twenty Questions <span class="pill">any age</span></summary><div class="body">
+        <p>One player thinks of a person, place, or thing and tells the others which of those three it is. The group asks up to <b>20 yes-or-no questions</b> to narrow it down (“Is it alive?”, “Is it bigger than a car?”), then takes guesses. Crack it within 20 and the guessers win; stump them and the thinker wins. Good questions split the possibilities in half each time.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>The Alphabet Game <span class="pill">road only</span></summary><div class="body">
+        <p>Race through the alphabet using words on <b>signs, billboards, and license plates</b> outside the car. Find a word starting with A, then B, and so on to Z. Two ways to play: <b>everyone shares</b> the same sightings (cooperative), or it's <b>every-passenger-for-themselves</b> and you can't claim a sign someone already used. Q, X, and Z are where dreams go to die — many families allow them as any-position letters.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Geography <span class="pill">spelling</span></summary><div class="body">
+        <p>A chain of place-names. The first player names any place (city, country, river, mountain…). The next must name a place starting with the <b>last letter</b> of the previous one — “Denver” → “Reno” → “Oslo” → “Ottawa” → and so on. No repeats. Stumped or wrong and you're out (or you lose a point). Surprisingly heated once someone drops “Kyrgyzstan”.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Ghost <span class="pill">spelling</span></summary><div class="body">
+        <p>Players take turns adding <b>one letter</b>, building toward some word but trying <em>not</em> to be the one who completes it. If you add a letter that finishes a real word (4+ letters), you lose the round and earn a letter of G-H-O-S-T. You may also <b>challenge</b> the previous player if you think they've added a letter that can't lead to any real word — if they're bluffing they lose, if they had a word in mind, you do. Spell out GHOST and you're eliminated.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Fortunately / Unfortunately <span class="pill">storytelling</span></summary><div class="body">
+        <p>Build a ridiculous story one sentence at a time, alternating openings. First player: <b>“Fortunately, we found a shortcut.”</b> Next: <b>“Unfortunately, it led straight into a swamp.”</b> Then “Fortunately…”, “Unfortunately…”, each player swinging the tale up and down. No winners — just see how gloriously far off the rails it goes. Great with kids.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Would You Rather <span class="pill">any age</span></summary><div class="body">
+        <p>Pose an impossible choice — “Would you rather be able to fly, or be invisible?” — and everyone answers <em>and defends it</em>. The fun is entirely in the arguing. Keep them coming around the car. For long drives, make a rule that each answer has to come with a reason, which turns a two-minute game into a half-hour debate.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Two Truths and a Lie <span class="pill">get-to-know-you</span></summary><div class="body">
+        <p>Each player states three things about themselves — two true, one invented. Everyone else votes on which is the <b>lie</b>. Score a point for each person you fool, and a point for each lie you correctly spot. A brilliant way to learn that your cousin once met a moose.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>The Counting Games <span class="pill">road only</span></summary><div class="body">
+        <p>Pick something to tally and watch out the window. <b>Cows</b>: each side of the car counts cows on their side; pass a cemetery on your side and you lose all yours (“bury your cows”). <b>Padiddle</b>: first to spot a car with one headlight out calls “Padiddle!” for a point. <b>Slug Bug</b>: a (gentle) point for each spotted. Set a target or just play till someone naps.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>The Quiet Game <span class="pill">parents' choice</span></summary><div class="body">
+        <p>Whoever stays silent the longest wins. That's the whole game. It has been deployed by tired drivers since the invention of the automobile and remains, somehow, undefeated.</p>
+      </div></details>
+      <details class="ruledtl"><summary>Buzz <span class="pill">counting · any age</span></summary><div class="body">
+        <p>Count upward around the car — one, two, three… — but any number that's a <b>multiple of 7 or contains a 7</b> must be replaced with <b>“buzz!”</b> (7, 14, 17, 21, 27, 28…). Say the number by mistake, or buzz when you shouldn't, and the count restarts (or you're out). Veterans add “fizz” for 5s at the same time — fizz, buzz, and at 35, “fizz-buzz.” Speeds up wonderfully as everyone gets cocky.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Contact <span class="pill">word game · teens+</span></summary><div class="body">
+        <h4>Play</h4><p>One player (the word-master) thinks of a secret word and announces its <b>first letter</b> — say, “S.” The others try to trap them: someone thinks of a word starting with S and gives a clue for it (“a reptile without legs”). If <em>another guesser</em> knows it, they yell <b>“Contact!”</b>, count down 3-2-1, and both say their word aloud. If they match (“snake!” “snake!”), the word-master must reveal the <b>next letter</b> — unless the word-master beats the countdown by naming the clue's answer first (“it's not <em>snake</em>”).</p>
+        <p>With each revealed letter, clues must fit the growing prefix. Guessers win by eventually naming the secret word; the word-master wins by surviving the alphabet siege. The best pure-talk game there is for a long dark highway.</p>
+      </div></details>
+    </div>
+  </section>
+
+    <!-- CAMPFIRE & CAMP -->
+  <section id="view-campfire" class="view">
+    <div class="game-head"><div class="title"><h2>Campfire &amp; Camp Games</h2><div class="sub">Around the fire after dark, and run-around games for daylight.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print</button></div>
+    <p class="rules-intro">First half: games for a circle of people and zero equipment. Second half: classic run-around games for the campsite — set boundaries with the kids before you start, and agree what's out of bounds after dark.</p>
+
+    <div class="rules-grid">
+      <details class="ruledtl"><summary>Charades <span class="pill">4+ · circle</span></summary><div class="body">
+        <h4>Setup</h4><p>Split into two teams. Each team secretly writes prompts for the <em>other</em> team on scraps of paper — movies, books, songs, animals, famous people, or family in-jokes.</p>
+        <h4>Play</h4><p>One player draws a prompt and acts it out <b>silently</b> — no words, no mouthing, no pointing at objects and no sounds — while their team shouts guesses against a 2-minute timer. Solved in time = a point.</p>
+        <h4>The standard gestures</h4>
+        <ul>
+          <li><b>Category:</b> movie = crank an old camera · book = open your palms · song = pretend to sing · TV = draw a rectangle · person = stand hands-on-hips.</li>
+          <li><b>Counts:</b> hold up fingers for the number of words, then which word you're acting; tap your forearm with fingers for the syllable count.</li>
+          <li><b>Shortcuts:</b> “sounds like” = tug your earlobe · “shorter/longer” = pinch or stretch your hands · “whole idea” = sweep both arms · on the nose = someone got it, tap your nose and point.</li>
+        </ul>
+      </div></details>
+
+      <details class="ruledtl"><summary>Werewolf (Mafia) <span class="pill alt">7+ · after dark</span></summary><div class="body">
+        <h4>Setup</h4><p>One player is the <b>moderator</b> and deals secret roles (scraps of paper work): <b>two Werewolves</b>, one <b>Seer</b>, one <b>Doctor</b>, everyone else a <b>Villager</b>. (With 10+, add a third wolf.)</p>
+        <h4>Night</h4><p>The moderator says “everyone sleep” — all eyes closed. Then, one at a time: <b>wolves wake</b> and silently pick a victim · <b>Seer wakes</b> and points at someone; the moderator nods if they're a wolf · <b>Doctor wakes</b> and picks one person to protect.</p>
+        <h4>Day</h4><p>Everyone wakes; the moderator announces who was taken in the night (unless the Doctor saved them). The survivors debate, accuse, and <b>vote someone out</b> — that player reveals their role and is gone. Then night falls again.</p>
+        <h4>Winning</h4><p><b>Villagers win</b> when both wolves are voted out. <b>Wolves win</b> when they equal the villagers. Dead players stay silent — the hardest rule in the game. Firelight makes it perfect.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Salad Bowl (Celebrity) <span class="pill">4+ · circle</span></summary><div class="body">
+        <h4>Setup</h4><p>Everyone writes 3–5 names or things on scraps of paper — people, characters, animals, anything — into one bowl (a hat or pot works). Two teams.</p>
+        <h4>Three rounds, same papers</h4>
+        <ol>
+          <li><b>Describe:</b> 60 seconds to get your team to guess as many papers as possible using any words except the answer itself. Keep guessed slips; the bowl passes at the buzzer.</li>
+          <li><b>One word:</b> all papers go back in. Same thing, but you may say only a <b>single word</b> per slip. (Everyone's heard them all once — that's the trick.)</li>
+          <li><b>Charades:</b> back in the bowl one last time; act only, no sounds.</li>
+        </ol>
+        <p>Most slips across all three rounds wins. Ideal at a picnic table.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Telephone <span class="pill">5+ · kids love it</span></summary><div class="body">
+        <p>Sit in a circle. One player whispers a sentence <b>once</b> to their neighbor, who whispers what they heard to the next, and so on around the ring. The last player says it aloud, then the original is revealed. No repeating, no clarifying — the mangling is the game. Longer, sillier sentences fail more spectacularly.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Flashlight Tag <span class="pill">outdoors · night</span></summary><div class="body">
+        <p>Hide-and-seek meets tag, after dark. One player is “it” with a flashlight and counts at base while everyone hides. Instead of tagging by hand, “it” tags by <b>catching you in the beam and calling your name</b> — then you're caught (or you become it, by house rule). Agree on boundaries in daylight first, and give little kids a buddy. Glow sticks on ankles make it magical <em>and</em> safer.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Sardines <span class="pill">outdoors or cabin</span></summary><div class="body">
+        <p>Reverse hide-and-seek: <b>one</b> player hides, everyone else counts, then all seek <em>separately</em>. When you find the hider, you don't say a word — you <b>squeeze into the hiding spot with them</b>. The pack grows, giggling, until the last searcher finds a spot stuffed with sardines. That last player hides first next round. Spectacular at dusk.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Ghost in the Graveyard <span class="pill">outdoors · dusk</span></summary><div class="body">
+        <p>One player — the Ghost — hides while everyone else counts at base: <b>“one o'clock, two o'clock… midnight!”</b> Then all wander looking for the ghost. Whoever spots it yells <b>“Ghost in the graveyard!”</b> and everyone sprints for base while the ghost tries to tag someone. Anyone tagged becomes a ghost too — soon the dark is full of them. Last free player wins.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Capture the Flag <span class="pill">outdoors · teams</span></summary><div class="body">
+        <h4>Setup</h4><p>Two teams, two territories with a clear center line, one flag (bandana, towel) placed visibly in the back of each side, and one jail per side.</p>
+        <h4>Play</h4><p>Cross the line to steal the enemy flag. Get tagged on their side and you go to <b>jail</b>; a teammate can free you with a tag (walk back with a free pass). The flag carrier, if tagged, drops the flag where caught.</p>
+        <h4>Winning</h4><p>Carry the enemy flag back across the center line. Classic house rules to settle first: can you guard the flag closely (“no puppy-guarding” within ten paces is common), and does a freed prisoner get safe passage home.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Camouflage <span class="pill">outdoors · day</span></summary><div class="body">
+        <p>The seeker stands at a fixed spot, closes their eyes and counts to 20 while everyone hides <b>within sight of the seeker's spot</b>. The seeker — feet planted — calls out anyone they can see. Then: “Camouflage! Ten!” — eyes closed for a 10-count while hiders must <b>move closer</b> and re-hide. Then a 5-count, then 3. Whoever's nearest the seeker without ever being spotted wins. Teaches sneaking; beloved by scouts.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Manhunt <span class="pill">outdoors · teens</span></summary><div class="body">
+        <p>Team hide-and-seek-tag, usually at dusk: a small team of hunters, everyone else hides across the whole (agreed!) area. Tagged players either join the hunters (snowball version — game accelerates to a thrilling end) or go to a jail that teammates can raid. Round ends when everyone's caught or a time limit hits. Set boundaries and a “game over” whistle signal first.</p>
+      </div></details>
+    </div>
+  </section>
+
+  <!-- CARD RULES -->
+  <section id="view-rules" class="view">
+    <div class="game-head"><div class="title"><h2>Card Rules</h2><div class="sub">One standard 52-card deck. Everything you need to settle an argument.</div></div><button class="btn no-print" onclick="printPage()">🖨 Print</button></div>
+    <p class="rules-intro">Complete quick-rules for the games worth knowing around a campfire. Tap a title to expand. Unless noted: aces high, deal clockwise starting left of the dealer, and the deal passes left each hand.</p>
+
+    <div class="poker">
+      <h3>Poker hands — best to worst</h3>
+      <ol>
+        <li><b>Royal Flush</b> — A-K-Q-J-10, one suit. <span class="ex"><span class="suit-r">A♥ K♥ Q♥ J♥ 10♥</span></span></li>
+        <li><b>Straight Flush</b> — five in sequence, one suit. <span class="ex"><span class="suit-b">9♠ 8♠ 7♠ 6♠ 5♠</span></span></li>
+        <li><b>Four of a Kind</b> — four of one rank. <span class="ex">Q-Q-Q-Q-x</span></li>
+        <li><b>Full House</b> — three of a kind + a pair. <span class="ex">10-10-10-7-7 (“tens full of sevens”)</span></li>
+        <li><b>Flush</b> — any five of one suit. <span class="ex"><span class="suit-r">K♦ 9♦ 7♦ 4♦ 2♦</span></span></li>
+        <li><b>Straight</b> — five in sequence, mixed suits. <span class="ex">8-7-6-5-4</span></li>
+        <li><b>Three of a Kind</b> — <span class="ex">J-J-J-x-x</span></li>
+        <li><b>Two Pair</b> — <span class="ex">9-9-5-5-x</span></li>
+        <li><b>One Pair</b> — <span class="ex">A-A-x-x-x</span></li>
+        <li><b>High Card</b> — none of the above; highest card plays.</li>
+      </ol>
+      <p class="ex" style="margin:.5rem 0 0">Ties break by the highest cards involved, then by “kickers” (the leftover cards). Ace plays high or low in a straight (A-2-3-4-5 works) but never “around the corner” (Q-K-A-2-3 is no good).</p>
+    </div>
+
+    <div class="rules-grid">
+      <details class="ruledtl"><summary>Gin Rummy <span class="pill">2 players</span></summary><div class="body">
+        <h4>Setup</h4><p>Deal <b>10 cards each</b>. Place the rest face-down as the stock and flip the top card to start the discard pile. Aces are <b>low</b> (A-2-3 is a run; Q-K-A is not). Card values: face cards 10, ace 1, others pip value.</p>
+        <h4>Play</h4><p>Arrange your hand into <b>melds</b>: runs of 3+ consecutive cards in one suit, or sets of 3–4 of a rank. Unmatched cards are <b>deadwood</b>. Each turn: draw one card (top of stock <em>or</em> top of discard), then discard one. On the very first turn, the non-dealer may take the upcard or pass.</p>
+        <h4>Ending a hand</h4>
+        <ul>
+          <li><b>Knock</b> (discard face-down) when your deadwood totals <b>10 or less</b>; lay out melds and deadwood. The opponent may <b>lay off</b> cards onto your melds to shrink their deadwood.</li>
+          <li><b>Gin</b> — zero deadwood. <b>+25 bonus</b>, and the opponent may <em>not</em> lay off.</li>
+          <li><b>Undercut</b> — if the defender's deadwood ≤ the knocker's, the defender scores the difference <b>+25</b>.</li>
+          <li>If only two stock cards remain and nobody knocks, the hand is a wash — redeal.</li>
+        </ul>
+        <h4>Scoring the match</h4><p>Knocker scores the deadwood difference. First to <b>100</b> wins the game; classic scoring then adds 25 per hand won (“box”) and 100 for the game. Shutting someone out (they never scored) doubles everything.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Rummy 500 <span class="pill">2–8 players</span></summary><div class="body">
+        <h4>Setup</h4><p>Deal <b>7 each</b> (10 each for two players; use two decks for 5+). Flip one card to start the discard pile, which stays <b>spread out</b> so all cards are visible.</p>
+        <h4>Play</h4><p>On your turn, draw either the top of the stock <em>or</em> dig into the discard pile: you may take <b>any card</b> in it, but you must also take every card on top of it, and you must immediately meld the card you dug for. Then meld any sets/runs face-up in front of you, <b>lay off</b> cards onto anyone's melds (announce where they go), and discard one.</p>
+        <h4>Scoring</h4><p>When someone goes out (plays their last card), the hand ends. Everyone scores: melded cards count <b>for</b> you, cards stuck in your hand count <b>against</b> you. Aces = 15 (or 5 when played low in A-2-3), faces = 10, number cards = pip value.</p>
+        <h4>Winning</h4><p>First to <b>500</b> total wins. Going negative is possible and very funny for everyone else.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Hearts <span class="pill">4 players</span></summary><div class="body">
+        <h4>Setup</h4><p>Deal the whole deck — 13 each. The goal is to score as <b>few</b> points as possible: each ♥ = 1, the Q♠ = 13. (3 players: remove the 2♦; 5: remove 2♦ and 2♣.)</p>
+        <h4>Passing</h4><p>Before each hand, pass 3 cards: <b>left</b>, then <b>right</b>, then <b>across</b>, then <b>no pass</b> — repeating.</p>
+        <h4>Play</h4>
+        <ul>
+          <li>Whoever holds the <b>2♣ leads it</b> to the first trick. Follow the led suit if you can; otherwise play anything — with one exception: no points (hearts or Q♠) may be dumped on the first trick.</li>
+          <li>Hearts can't be <b>led</b> until a heart has been discarded on another trick (“hearts are broken”), unless you hold nothing else.</li>
+          <li>Highest card of the led suit takes the trick and leads next. There is no trump.</li>
+        </ul>
+        <h4>Scoring</h4><p>Count your hearts and the Q♠. <b>Shooting the moon</b> — taking all 26 points — scores you 0 and everyone else 26. Play to 100; when someone crosses it, <b>lowest total wins</b>.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Spades <span class="pill">4 players · teams</span></summary><div class="body">
+        <h4>Setup</h4><p>Two partnerships, partners across. Deal 13 each. <b>Spades are always trump</b> and can't be led until “broken” (played on another suit's trick) unless you have nothing else.</p>
+        <h4>Bidding</h4><p>Each player bids the number of tricks they expect to win, in turn, no passing; partners' bids combine into a team contract. <b>Nil</b> = a bid to win zero tricks (+100 if you make it, −100 if you take even one). <b>Blind nil</b> (bid before looking at your cards, when your team is down 100+) = ±200.</p>
+        <h4>Play</h4><p>Player left of dealer leads anything but a spade. Follow suit if able; a spade beats any non-spade. Highest spade — or highest card of the led suit if no spade appears — wins the trick.</p>
+        <h4>Scoring</h4><p>Make the contract: <b>10 × bid</b>, plus 1 per overtrick (“bag”). Collect <b>10 bags</b> across hands and you lose 100. Miss the contract: <b>−10 × bid</b>. First team to <b>500</b> wins.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Euchre <span class="pill">4 players · teams</span></summary><div class="body">
+        <h4>Setup</h4><p>Strip the deck to <b>24 cards</b>: 9, 10, J, Q, K, A in each suit. Partners across. Deal 5 each (traditionally in packets of 2 and 3); flip the next card face-up.</p>
+        <h4>Trump &amp; bowers</h4><p>In the trump suit, the <b>Jack (right bower)</b> is highest, then the <b>other Jack of the same color (left bower)</b> — which counts as a trump — then A, K, Q, 10, 9.</p>
+        <h4>Bidding</h4><p>Round one: each player may tell the dealer to “pick it up” (the upcard's suit becomes trump; dealer takes the card and discards one) or pass. Round two: if all passed, the upcard is turned down and players may name any <em>other</em> suit as trump, or pass; if everyone passes again, throw in the hand. The team that names trump are the <b>makers</b>.</p>
+        <h4>Play &amp; scoring</h4>
+        <ul>
+          <li>Left of dealer leads; follow suit if able (the left bower counts as trump, not its printed suit). Highest trump, or highest card of the suit led, wins.</li>
+          <li>Makers take 3–4 tricks = <b>1 pt</b> · all 5 (“march”) = <b>2</b> · fail = defenders score <b>2</b> (“euchred”).</li>
+          <li><b>Going alone</b>: the maker may play without their partner; a lone march = <b>4 pts</b>.</li>
+        </ul>
+        <p>First team to <b>10</b> wins.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Blackjack — 21 <span class="pill">2+ · casual</span></summary><div class="body">
+        <h4>Setup</h4><p>One player deals (rotate each round or whenever someone gets blackjack). Everyone antes a token — pretzels and pinecones work fine. Each player gets 2 cards face-up; the dealer takes one up, one down.</p>
+        <h4>Goal</h4><p>Get closer to <b>21</b> than the dealer without going over. Faces = 10, ace = <b>1 or 11</b> (your choice), others pip value. An ace + a ten-card on the deal = <b>blackjack</b>, instant win (traditionally pays 3:2).</p>
+        <h4>Play</h4><p>In turn, each player may <b>hit</b> (take a card) as often as they like, or <b>stand</b>. Go over 21 = <b>bust</b>, out immediately. Then the dealer reveals and must hit until reaching <b>17 or more</b>. Beat the dealer's total to win the round. Optional: <b>double down</b> (one card only, double stakes) and <b>splitting pairs</b> into two hands.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>President <span class="pill">4–7 players</span></summary><div class="body">
+        <h4>Setup</h4><p>Deal the whole deck. Ranking: <b>2 is highest</b>, then A, K… down to 3. The first hand has no roles; afterwards, players are President, Vice-President, … down to the Scum, and seats/perks shift accordingly.</p>
+        <h4>Play</h4><p>Whoever holds the 3♣ leads (any single or set of equal cards, e.g. a pair of 6s). Each player in turn must play the <b>same number of cards of higher rank</b>, or pass. When everyone passes, the pile clears and the last player to play leads fresh. First out of cards is <b>President</b>; last is the <b>Scum</b>.</p>
+        <h4>Between hands</h4><p>The Scum hands the President their <b>two best cards</b>; the President returns any two. (Vice pairs trade one.) The Scum also deals and the President leads. Common house rules: 2 clears the pile; four of a kind reverses ranking — agree first.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Golf — 6-card <span class="pill">2–6 players</span></summary><div class="body">
+        <h4>Setup</h4><p>Deal <b>6 cards each</b>, face-down in a 2×3 grid. Flip any <b>two</b> of your cards face-up. Rest of the deck is stock; flip one to start the discard pile. Like golf, <b>low score wins</b>.</p>
+        <h4>Play</h4><p>On your turn, draw from stock or discard, then either swap it for any card in your grid (face-up or down — the replaced card goes to the discard) or discard it. When one player's grid is fully face-up, everyone else gets <b>one last turn</b>, then all cards flip.</p>
+        <h4>Scoring</h4><p>Aces = 1 · 2s = <b>−2</b> · 3–10 = pip value · J/Q = 10 · K = <b>0</b>. A <b>pair in the same column cancels to zero</b>. Play 9 “holes” (hands); lowest total wins the round of golf.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Klondike Solitaire <span class="pill alt">1 player</span></summary><div class="body">
+        <h4>Setup</h4><p>Deal 7 piles: 1 card, then 2, … up to 7, only the top card of each face-up. Remaining cards form the stock. Four <b>foundations</b> (one per suit) start empty.</p>
+        <h4>Play</h4>
+        <ul>
+          <li>Build the tableau piles <b>down, alternating colors</b> (red 9 on black 10). Move single cards or sequences together.</li>
+          <li>A space left by an emptied pile can only be filled by a <b>King</b> (or a King-led sequence).</li>
+          <li>Flip the newly exposed card whenever a face-down card is uncovered.</li>
+          <li>Turn the stock <b>3 at a time</b> (easy mode: 1 at a time), playing the top card if you can; recycle when it runs out.</li>
+          <li>Build foundations <b>up by suit</b> from the ace: A-2-3…K.</li>
+        </ul>
+        <p><b>Win</b> by getting all 52 onto the foundations. Roughly 1 in 3 deals is winnable with the 3-card draw — don't take it personally.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Crazy Eights <span class="pill">2+ players</span></summary><div class="body">
+        <h4>Setup</h4><p>Deal 5 cards each (7 for two players). Flip one to start the discard pile.</p>
+        <h4>Play</h4><p>Match the top card's <b>suit or rank</b>. <b>Eights are wild</b> — play one anytime and call the next suit. Can't play? Draw until you can (house rule: max 3 draws, then pass). First to empty their hand wins; for points, losers' hand cards count against them (8 = 50, faces = 10, ace = 1).</p>
+        <p class="note">Popular add-ons: 2 = next player draws two (stackable) · Queen = skip · Jack = reverse. Agree before dealing or prepare for mutiny.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Go Fish <span class="pill">2+ · kids</span></summary><div class="body">
+        <p>Deal 5–7 each; the rest is the “pond.” On your turn, ask a specific player for a rank you already hold (“Any sevens?”). If they have any, they hand <b>all</b> of them over and you ask again — anyone. If not: <b>“Go fish”</b> — draw from the pond; if you draw what you asked for, show it and keep going. Completed <b>sets of four</b> go face-up. When all 13 sets are claimed, most sets wins.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Old Maid <span class="pill">3+ · kids</span></summary><div class="body">
+        <p>Remove three queens, leaving one — the Old Maid. Deal everything out. All players discard pairs from their hands. Then, in turn, each player blindly draws one card from the neighbor on their left, discarding any new pair made. Hands shrink until only the lone queen remains — whoever's stuck holding her loses, and everyone else wins together.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Slapjack <span class="pill">2+ · loud</span></summary><div class="body">
+        <p>Deal the whole deck face-down; players don't look at their cards. In turn, flip your top card quickly onto a center pile. When a <b>Jack</b> appears — <b>slap it!</b> First hand on the pile takes the whole stack. Slap a non-Jack and you pay each player one card. Run out of cards and you get one last chance: slap the next Jack to rejoin. Last player holding all the cards wins. (Trim fingernails first.)</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>War <span class="pill">2 · endless</span></summary><div class="body">
+        <p>Split the deck evenly, face-down. Both flip their top card; higher takes both (aces high). On a tie it's <b>war</b>: each lays three cards face-down and one face-up — the higher face-up card takes all ten. Out of cards mid-war? Your last card plays. Collect the whole deck to win. Zero skill, infinite drama — ideal for traffic jams.</p>
+      </div></details>
+      <details class="ruledtl"><summary>Spoons <span class="pill">3–8 · loud</span></summary><div class="body">
+        <h4>Setup</h4><p>Place <b>one fewer spoon than players</b> in the middle (forks from the mess kit work). Deal 4 cards each; dealer keeps the deck.</p>
+        <h4>Play</h4><p>The dealer draws a card, keeps or passes it face-down to the left, always holding exactly 4; everyone continuously passes cards around the circle at whatever speed chaos allows. The moment someone collects <b>four of a kind</b>, they grab a spoon — sneakily or blatantly — and then <em>everyone</em> grabs. The player left empty-handed takes a letter of S-P-O-O-N (or is simply out, removing a spoon too). Last survivor wins.</p>
+        <p class="note">The all-time move: get your four of a kind and quietly slide a spoon out while continuing to pass cards, watching the table slowly notice.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Thirty-One (Scat) <span class="pill">2–9 players</span></summary><div class="body">
+        <h4>Setup</h4><p>Deal 3 cards each; flip one to start the discard pile. Everyone gets <b>three lives</b> (pebbles, matches, pretzels). Goal: get your hand's <b>same-suit total</b> as close to 31 as possible — aces = 11, faces = 10. Three of a kind counts 30.</p>
+        <h4>Play</h4><p>Draw from the stock or discard pile, then discard, always holding 3. When you like your hand, <b>knock</b> instead of drawing — everyone else gets one final turn, then hands show. Lowest total loses a life; hitting <b>exactly 31</b> ends the hand instantly and everyone else loses a life.</p>
+        <h4>Winning</h4><p>Lose all three lives and you're “on your honor” — lose once more and you're out. Last player alive wins.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Palace <span class="pill">2–5 players</span></summary><div class="body">
+        <h4>Setup</h4><p>Each player gets <b>3 face-down</b> cards (don't look!), <b>3 face-up</b> on top of them, and a hand of 3. Before starting you may swap hand cards with your face-up row to bank good ones.</p>
+        <h4>Play</h4><p>Play a card (or a set of equals) onto the pile that's <b>equal or higher</b> than the top card, then draw back up to 3 while the stock lasts. Can't play? <b>Pick up the whole pile.</b> Magic cards: <b>2</b> resets the pile (play anything next), <b>10</b> burns the pile away entirely (and go again); four of a kind on top also burns.</p>
+        <h4>Endgame</h4><p>Hand and stock gone, play your face-up cards; those gone, flip your face-down cards <b>blind</b>, one per turn — flip a loser and the pile's yours. First to shed everything wins; last player is the Scumbag and deals next.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Kings in the Corner <span class="pill">2–4 players</span></summary><div class="body">
+        <h4>Setup</h4><p>Deal 7 each; place the stock in the middle and flip one card onto each of its four sides (N, S, E, W).</p>
+        <h4>Play</h4><p>On your turn, draw one card, then play as many moves as you can: build the side piles <b>down, alternating colors</b> (like solitaire); move a whole pile onto another if it fits the sequence; fill emptied side slots with any card. <b>Kings — and only Kings — start the four diagonal corner piles.</b></p>
+        <h4>Winning</h4><p>First to play out their whole hand wins. For points, losers count cards left (10 per King). Low equipment, high spite.</p>
+      </div></details>
+
+      <details class="ruledtl"><summary>Egyptian Ratscrew <span class="pill">2+ · fast hands</span></summary><div class="body">
+        <h4>Play</h4><p>Deal the whole deck face-down; no peeking. Take turns flipping cards fast onto a center pile. When someone flips a <b>face card or ace</b>, the next player must flip another face/ace within a set number of tries — <b>J = 1, Q = 2, K = 3, A = 4</b> — or the challenger takes the pile.</p>
+        <h4>Slaps</h4><p>Anyone may slap the pile and win it instantly on: a <b>double</b> (two equal cards in a row) or a <b>sandwich</b> (equal cards separated by one). False slap = pay two cards to the pile's bottom. House rules add marriages (K then Q) and runs — agree first.</p>
+        <p>Run out of cards and you can only slap your way back in. Whoever holds the whole deck wins. Trim fingernails; hide jewelry.</p>
+      </div></details>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* NAV */
+function show(name){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('view-'+name).classList.add('active');document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===name));const cur=document.querySelector(`.tab[data-tab="${name}"]`);const lab=document.getElementById('nav-current');if(cur&&lab)lab.textContent=cur.textContent.replace(/^[^A-Za-z]*/,'');closeNav();window.scrollTo({top:0,behavior:'smooth'});if(name==='bingo')requestAnimationFrame(()=>fitBingoStage('bingo-stage'));if(name==='diy')requestAnimationFrame(()=>fitBingoStage('diy-stage'));}
+function toggleNav(e){e.stopPropagation();const d=document.getElementById('tabs');const open=d.classList.toggle('open');document.getElementById('navbtn').setAttribute('aria-expanded',open);}
+function closeNav(){document.getElementById('tabs').classList.remove('open');document.getElementById('navbtn').setAttribute('aria-expanded','false');}
+document.addEventListener('click',e=>{if(!e.target.closest('.navwrap'))closeNav();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+/* SUDOKU */
+let sBoard=[],sGiven=[],sSolution=[],sNotes=[],sSel=-1,sDiff='easy';
+function emptyGrid(){return Array.from({length:9},()=>Array(9).fill(0));}
+function safe(g,r,c,n){for(let i=0;i<9;i++){if(g[r][i]===n||g[i][c]===n)return false;}const br=r-r%3,bc=c-c%3;for(let i=0;i<3;i++)for(let j=0;j<3;j++)if(g[br+i][bc+j]===n)return false;return true;}
+function fill(g){for(let i=0;i<81;i++){const r=(i/9)|0,c=i%9;if(g[r][c]===0){for(const n of shuffle([1,2,3,4,5,6,7,8,9])){if(safe(g,r,c,n)){g[r][c]=n;if(fill(g))return true;g[r][c]=0;}}return false;}}return true;}
+function countSolutions(g,limit){let count=0;(function solve(){if(count>=limit)return;for(let i=0;i<81;i++){const r=(i/9)|0,c=i%9;if(g[r][c]===0){for(let n=1;n<=9;n++){if(safe(g,r,c,n)){g[r][c]=n;solve();g[r][c]=0;if(count>=limit)return;}}return;}}count++;})();return count;}
+function makePuzzle(diff){const sol=emptyGrid();fill(sol);const puzzle=sol.map(r=>r.slice());const tg={easy:42,medium:34,hard:28,expert:24}[diff]||34;const order=shuffle([...Array(81).keys()]);let given=81;for(const idx of order){if(given<=tg)break;const r=(idx/9)|0,c=idx%9,r2=8-r,c2=8-c;if(puzzle[r][c]===0)continue;const a=puzzle[r][c],b=puzzle[r2][c2];puzzle[r][c]=0;puzzle[r2][c2]=0;const t=puzzle.map(x=>x.slice());if(countSolutions(t,2)!==1){puzzle[r][c]=a;puzzle[r2][c2]=b;}else{given-=(r===r2&&c===c2)?1:2;}}return{puzzle,sol};}
+function newSudoku(){const msg=document.getElementById('sudoku-msg');msg.textContent='generating…';msg.className='sudoku-msg';setTimeout(()=>{const {puzzle,sol}=makePuzzle(sDiff);sSolution=sol;sBoard=puzzle.map(r=>r.slice());sGiven=puzzle.map(r=>r.map(v=>v!==0));sNotes=Array.from({length:9},()=>Array.from({length:9},()=>new Set()));sSel=-1;renderSudoku();msg.textContent='';},20);}
+function renderSudoku(){const grid=document.getElementById('sudoku-grid');grid.innerHTML='';[33.333,66.666].forEach(p=>{const v=document.createElement('div');v.className='band-v';v.style.left=`calc(${p}% - 1px)`;grid.appendChild(v);const h=document.createElement('div');h.className='band-h';h.style.top=`calc(${p}% - 1px)`;grid.appendChild(h);});for(let r=0;r<9;r++)for(let c=0;c<9;c++){const i=r*9+c;const cell=document.createElement('div');cell.className='cell'+(sGiven[r][c]?' given':'');cell.dataset.i=i;const val=sBoard[r][c];if(val)cell.textContent=val;else if(sNotes[r][c].size){const nb=document.createElement('div');nb.className='notes';for(let n=1;n<=9;n++){const s=document.createElement('span');s.textContent=sNotes[r][c].has(n)?n:'';nb.appendChild(s);}cell.appendChild(nb);}cell.onclick=()=>{sSel=i;highlightS();};grid.appendChild(cell);}highlightS();buildPad();}
+function highlightS(){const cells=[...document.querySelectorAll('#sudoku-grid .cell')];const conf=new Set();for(let r=0;r<9;r++)for(let c=0;c<9;c++){const v=sBoard[r][c];if(!v)continue;for(let k=0;k<9;k++){if(k!==c&&sBoard[r][k]===v){conf.add(r*9+c);conf.add(r*9+k);}if(k!==r&&sBoard[k][c]===v){conf.add(r*9+c);conf.add(k*9+c);}}const br=r-r%3,bc=c-c%3;for(let a=0;a<3;a++)for(let b=0;b<3;b++){const rr=br+a,cc=bc+b;if((rr!==r||cc!==c)&&sBoard[rr][cc]===v){conf.add(r*9+c);conf.add(rr*9+cc);}}}const sr=sSel>=0?(sSel/9|0):-1,sc=sSel>=0?sSel%9:-1;cells.forEach(cell=>{const i=+cell.dataset.i,r=i/9|0,c=i%9;cell.classList.toggle('sel',i===sSel);cell.classList.toggle('peer',sSel>=0&&i!==sSel&&(r===sr||c===sc||(r-r%3===sr-sr%3&&c-c%3===sc-sc%3)));cell.classList.toggle('conflict',conf.has(i));});}
+function buildPad(){const pad=document.getElementById('sudoku-pad');pad.innerHTML='';for(let n=1;n<=9;n++){const b=document.createElement('button');b.textContent=n;b.onclick=()=>enterS(n);pad.appendChild(b);}const er=document.createElement('button');er.className='erase';er.textContent='Erase';er.onclick=()=>enterS(0);pad.appendChild(er);}
+function enterS(n){if(sSel<0)return;const r=sSel/9|0,c=sSel%9;if(sGiven[r][c])return;if(n===0){sBoard[r][c]=0;sNotes[r][c].clear();}else{sBoard[r][c]=n;sNotes[r][c].clear();}renderSudoku();checkWinS();}
+function checkWinS(){const msg=document.getElementById('sudoku-msg');for(let r=0;r<9;r++)for(let c=0;c<9;c++)if(sBoard[r][c]===0){msg.textContent='';msg.className='sudoku-msg';return;}let ok=true;for(let r=0;r<9&&ok;r++)for(let c=0;c<9&&ok;c++)if(sBoard[r][c]!==sSolution[r][c])ok=false;msg.textContent=ok?'☆ Solved — nicely done!':'Full, but something’s off. Check the red cells.';msg.className='sudoku-msg '+(ok?'win':'err');}
+function clearSudoku(){for(let r=0;r<9;r++)for(let c=0;c<9;c++)if(!sGiven[r][c]){sBoard[r][c]=0;sNotes[r][c].clear();}document.getElementById('sudoku-msg').textContent='';renderSudoku();}
+function solveSudoku(){sBoard=sSolution.map(r=>r.slice());for(let r=0;r<9;r++)for(let c=0;c<9;c++)sNotes[r][c].clear();renderSudoku();const m=document.getElementById('sudoku-msg');m.textContent='Solution revealed.';m.className='sudoku-msg';}
+document.getElementById('sudoku-diff').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;sDiff=b.dataset.d;document.getElementById('sudoku-diff-label').textContent=b.textContent;[...e.currentTarget.children].forEach(x=>x.classList.toggle('on',x===b));newSudoku();});
+document.addEventListener('keydown',e=>{if(!document.getElementById('view-sudoku').classList.contains('active')||sSel<0)return;if(e.key>='1'&&e.key<='9')enterS(+e.key);else if(e.key==='Backspace'||e.key==='Delete'||e.key==='0')enterS(0);else if(e.key.startsWith('Arrow')){let r=sSel/9|0,c=sSel%9;if(e.key==='ArrowUp')r=(r+8)%9;if(e.key==='ArrowDown')r=(r+1)%9;if(e.key==='ArrowLeft')c=(c+8)%9;if(e.key==='ArrowRight')c=(c+1)%9;sSel=r*9+c;highlightS();e.preventDefault();}});
+
+/* BINGO + DIY (shared helpers) */
+const BINGO_THEMES={
+  "Road Trip":["Red car","18-wheeler truck","Cow","Out-of-state plate","Gas station","Billboard","Motorcycle","A bridge","A tunnel","Roadside diner","Police car","Water tower","Hay bales","Horse","Road work / cones","Rest-stop sign","RV or camper","School bus","Big bird (hawk/eagle)","Mountain view","Lake or river","A flag","Tractor","Speed limit 70+","“Are we there yet?”","Someone asleep","Dog in another car","Wind turbine","A train","Faraway license plate"],
+  "Camping":["Tent","Campfire","S’more / marshmallow","Sleeping bag","Flashlight","Picnic table","Squirrel","Raccoon","Deer","Pinecone","Trail marker","Canoe or kayak","Fishing rod","Bug spray","A mosquito bite","Hiking boots","Map or compass","Stack of firewood","Lantern","Birdsong at dawn","A star you can name","Hammock","Camp chair","A cooler","Trail mix","Wet socks drying","A ghost story","Cast-iron skillet","Owl hoot","Wildflowers"],
+  "Dinner Night":["Someone arrives late","A toast is made","Phone buzzes at the table","“Pass the ___, please”","Second helpings","A spilled drink","A story you’ve heard before","Talk about the weather","Compliment to the cook","Someone’s “on a diet”","Politics (then dropped)","Dessert appears","Kid dodges the veggies","“I’m so full”","Someone does the dishes","A pet begs for food","Recipe gets requested","A glass refilled","Awkward silence","Slightly burnt something","“Save room for dessert”","Leftovers packed up","Group-photo attempt","Salt is requested","“Who made this?”","A candle is lit","Someone naps after","A new dish to try"],
+  "Nature Walk":["Butterfly","Spider web","Mushroom","Acorn","Frog or toad","A feather","Anthill","Berry bush","Patch of moss","A worm","Rabbit","Squirrel","Duck","Dragonfly","Stream crossing","Fallen log","Bird’s nest","Pinecone","Heart-shaped leaf","Animal tracks","Bee on a flower","A climbable tree","Skipping stones","A spider","Tall grass","Ladybug","Wildflower","Wind in the trees"],
+  "Airport":["Long security line","Delayed flight","Gate change","Sprint to a gate","A crying baby","Neck pillow","Duty-free bag","“Now boarding…”","Turbulence","Clouds out the window","Beverage cart","Seatbelt-sign ding","Overhead bin full","Tarmac wait","Baggage carousel","Airport dog","Tiny water bottle","Snoring passenger","Pilot announcement","Souvenir shop","Moving walkway","Pass on a phone","Customs line","Emotional reunion","Lost tourist","Overpriced coffee"],
+  "National Park":["Park entrance sign","Ranger hat","Scenic overlook","Trailhead marker","Visitor center","Junior Ranger badge","Wildlife traffic jam","Elk or deer","Bison or moose","Waterfall","Switchback trail","Brand-new hiking boots","RV struggling to park","Map unfolded wrong","“Do Not Feed” sign","Chipmunk begging anyway","Tour bus crowd","Souvenir patch or pin","Passport stamp station","Summit photo pose","Historic plaque read aloud","Gift-shop magnet","Viewpoint binoculars","Trail mix spilled","Hiker asking directions","Sunset crowd","Dawn campsite coffee","A wildflower meadow"],
+  "Family Reunion":["A hug that lasts too long","“You’ve grown so much!”","Old photo album","Story everyone’s heard twice","Potluck casserole","Folding tables appear","Matching T-shirts","Cousin name mix-up","Baby passed around","Someone asleep in a chair","Group photo takes forever","“Who made the potato salad?”","Lawn games break out","A toast to grandparents","Kids’ table shenanigans","Weather small talk","Phone full of photos shown","Leftovers sent home","“Back in my day…”","Family recipe debate","Someone arrives very late","Dog steals food","Card game starts up","Veggies rejected by a kid","Planning next year already","Embarrassing childhood story"],
+  "Ski Day":["Chairlift stops mid-air","Yard sale (full wipeout)","Goggle tan","Hot cocoa","First tracks","Pizza-wedge snowplow","Lost glove","Ski patrol sled","“It’s icy today”","Powder-day whoop","Lift-line small talk","Pole dropped from the lift","Snowboarder sitting mid-run","Trail map huddle","Frozen-toes break","Helmet hair","Retro one-piece suit","Ski-school train of kids","Moguls dodged","Après fries","Someone can’t find their skis","Fogged goggles","“One last run” that isn’t","Raccoon sunscreen face","Terrain park spectating","Snow down the jacket"],
+  "Beach Day":["Seagull steals food","Sandcastle with a moat","Sunscreen battle","Umbrella flips inside out","Wave knocks someone over","Metal-detector person","Sand in the sandwich","Boogie-board wipeout","Shell collection","Crab sighting","Lifeguard whistle","Flip-flop blowout","Buried in sand (on purpose)","Kite in the air","Cooler caravan","Ice cream drips","“It’s warm once you’re in”","Pier fisherman","Tide chases the towels","Frisbee lands on a towel","Zinc-nose lifeguard look","Nap under the umbrella","Salty-eyes complaint","Sunset photo shoot","Sand dollar found","Dolphin or ray spotted"]
+};
+function makeCardFrom(items){const pool=shuffle(items.slice());const picked=pool.slice(0,24);while(picked.length<24)picked.push('');const cells=[];let k=0;for(let i=0;i<25;i++){if(i===12)cells.push({free:true,text:"FREE"});else cells.push({free:false,text:picked[k++],marked:false});}return cells;}
+function checkBingoWin(c){const m=i=>c[i].free||c[i].marked;for(let r=0;r<5;r++)if([0,1,2,3,4].every(x=>m(r*5+x)))return true;for(let col=0;col<5;col++)if([0,1,2,3,4].every(r=>m(r*5+col)))return true;if([0,6,12,18,24].every(m))return true;if([4,8,12,16,20].every(m))return true;return false;}
+function winSet(c){const m=i=>c[i].free||c[i].marked;const lines=[];for(let r=0;r<5;r++){const l=[0,1,2,3,4].map(x=>r*5+x);if(l.every(m))lines.push(l);}for(let col=0;col<5;col++){const l=[0,1,2,3,4].map(r=>r*5+col);if(l.every(m))lines.push(l);}if([0,6,12,18,24].every(m))lines.push([0,6,12,18,24]);if([4,8,12,16,20].every(m))lines.push([4,8,12,16,20]);return new Set(lines.flat());}
+function renderCardSet(stageId,bannerId,cards,label,rerender){
+  const stage=document.getElementById(stageId);stage.innerHTML='';
+  const banner=document.getElementById(bannerId);banner.textContent='';
+  cards.forEach((cells,ci)=>{
+    const card=document.createElement('div');card.className='bingo-card';
+    card.innerHTML=`<div class="bingo-top"><div class="word">${'BINGO'.split('').map(l=>`<b>${l}</b>`).join('')}</div><small>${label}${cards.length>1?' · card '+(ci+1):''}</small></div>`;
+    const grid=document.createElement('div');grid.className='bingo-grid';
+    const ws=checkBingoWin(cells)?winSet(cells):null;
+    cells.forEach((cell,idx)=>{
+      const d=document.createElement('div');
+      d.className='bingo-cell'+(cell.free?' free':'')+(cell.marked?' marked':'')+(ws&&ws.has(idx)?' win':'');
+      d.textContent=cell.text;
+      if(!cell.free)d.onclick=()=>{cell.marked=!cell.marked;rerender();};
+      grid.appendChild(d);
+    });
+    card.appendChild(grid);
+    card.insertAdjacentHTML('beforeend','<div class="bingo-foot">Glovebox &amp; Backpack Game Book</div>');
+    stage.appendChild(card);
+    if(ws)banner.textContent=(cards.length>1?`Card ${ci+1}: `:'')+'B-I-N-G-O! 🎉';
+  });
+}
+let bingoTheme="Road Trip",bingoCount=4,bingoCards=[];
+function initBingoThemes(){const wrap=document.getElementById('bingo-themes');Object.keys(BINGO_THEMES).forEach((t,i)=>{const b=document.createElement('button');b.textContent=t;if(i===0)b.classList.add('on');b.onclick=()=>{bingoTheme=t;[...wrap.children].forEach(x=>x.classList.toggle('on',x===b));newBingo();};wrap.appendChild(b);});}
+function bingoN(id){const el=document.getElementById(id);let n=parseInt(el.value,10)||1;n=Math.max(1,Math.min(40,n));el.value=n;return n;}
+function newBingo(){bingoCount=bingoN('bingo-n');bingoCards=[];for(let i=0;i<bingoCount;i++)bingoCards.push(makeCardFrom(BINGO_THEMES[bingoTheme]));renderBingo();}
+function renderBingo(){renderCardSet('bingo-stage','bingo-banner',bingoCards,bingoTheme,renderBingo);fitBingoStage('bingo-stage');}
+
+let diyCount=4,diyCards=[],diyLabel='Family Bingo';
+document.getElementById('diy-n').addEventListener('change',()=>{if(diyCards.length)newDiy();});
+document.getElementById('diy-items').addEventListener('input',()=>{const n=parseDiyItems().length;document.getElementById('diy-count').textContent=`${n} item${n===1?'':'s'} — 24 fills a card${n>0&&n<24?' (blank squares are write-your-own)':''}`;});
+function parseDiyItems(){return [...new Set(document.getElementById('diy-items').value.split('\n').map(s=>s.trim()).filter(Boolean))];}
+function newDiy(){const items=parseDiyItems();if(items.length===0){document.getElementById('diy-banner').textContent='Add a few items first ↑';return;}diyLabel=document.getElementById('diy-title').value.trim()||'Family Bingo';diyCount=bingoN('diy-n');diyCards=[];for(let i=0;i<diyCount;i++)diyCards.push(makeCardFrom(items));renderDiy();}
+function renderDiy(){renderCardSet('diy-stage','diy-banner',diyCards,diyLabel,renderDiy);fitBingoStage('diy-stage');}
+
+/* WORD SEARCH */
+const WS_THEMES={
+  "Road Trip":["HIGHWAY","GASOLINE","ROADMAP","TUNNEL","BRIDGE","SCENERY","TRUCKER","PODCAST","LUGGAGE","MILEAGE","SNACKS","MOTEL","DETOUR","CRUISE"],
+  "Camping":["TENT","CAMPFIRE","LANTERN","BACKPACK","COMPASS","CANOE","FOREST","SMORES","FIREWOOD","TRAIL","WILDLIFE","KINDLING","HAMMOCK","COOLER"],
+  "Nature":["RIVER","MOUNTAIN","MEADOW","BOULDER","BLOSSOM","FEATHER","STREAM","PEBBLE","SUNSHINE","ACORN","MAPLE","ROBIN","FERN","WILLOW"]
+};
+const WS_N=12;
+let wsTheme="Road Trip",wsGrid=[],wsPlaced=[],wsFound=new Set(),wsSel=[],wsRevealed=false;
+function initWsThemes(){const wrap=document.getElementById('ws-themes');Object.keys(WS_THEMES).forEach((t,i)=>{const b=document.createElement('button');b.textContent=t;if(i===0)b.classList.add('on');b.onclick=()=>{wsTheme=t;[...wrap.children].forEach(x=>x.classList.toggle('on',x===b));newWordSearch();};wrap.appendChild(b);});}
+function newWordSearch(){
+  const DIRS=[[0,1],[1,0],[1,1],[1,-1],[0,-1],[-1,0],[-1,-1],[-1,1]];
+  const words=shuffle(WS_THEMES[wsTheme].slice());
+  let grid,placed,outer=0;
+  do{grid=Array.from({length:WS_N},()=>Array(WS_N).fill(''));placed=[];
+    for(const w of words){if(placed.length>=12)break;let done=false;
+      for(let a=0;a<120&&!done;a++){const [dr,dc]=DIRS[Math.floor(Math.random()*8)];const r0=Math.floor(Math.random()*WS_N),c0=Math.floor(Math.random()*WS_N);const re=r0+dr*(w.length-1),ce=c0+dc*(w.length-1);if(re<0||re>=WS_N||ce<0||ce>=WS_N)continue;let ok=true;const cells=[];for(let k=0;k<w.length;k++){const r=r0+dr*k,c=c0+dc*k;if(grid[r][c]&&grid[r][c]!==w[k]){ok=false;break;}cells.push([r,c]);}if(!ok)continue;cells.forEach(([r,c],k)=>grid[r][c]=w[k]);placed.push({word:w,cells});done=true;}}
+    outer++;
+  }while(placed.length<Math.min(10,words.length)&&outer<8);
+  const A="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  for(let r=0;r<WS_N;r++)for(let c=0;c<WS_N;c++)if(!grid[r][c])grid[r][c]=A[Math.floor(Math.random()*26)];
+  wsGrid=grid;wsPlaced=placed;wsFound=new Set();wsSel=[];wsRevealed=false;document.getElementById('ws-msg').textContent='';renderWordSearch();
+}
+function renderWordSearch(){
+  const g=document.getElementById('ws-grid');g.style.gridTemplateColumns=`repeat(${WS_N},var(--wsz))`;
+  const size=Math.min(Math.floor((Math.min(window.innerWidth*0.9,460))/WS_N),34);g.style.setProperty('--wsz',size+'px');g.innerHTML='';
+  const foundCells=new Set();wsPlaced.forEach((p,i)=>{if(wsFound.has(i))p.cells.forEach(([r,c])=>foundCells.add(r+'_'+c));});
+  const selSet=new Set(wsSel.map(([r,c])=>r+'_'+c));
+  const ansCells=new Set();if(wsRevealed)wsPlaced.forEach(p=>p.cells.forEach(([r,c])=>ansCells.add(r+'_'+c)));
+  for(let r=0;r<WS_N;r++)for(let c=0;c<WS_N;c++){const d=document.createElement('div');const key=r+'_'+c;d.className='ws-cell'+(foundCells.has(key)?' found':'')+(selSet.has(key)?' sel':'')+(ansCells.has(key)?' answer':'');d.textContent=wsGrid[r][c];d.onclick=()=>wsTap(r,c);g.appendChild(d);}
+  const wl=document.getElementById('ws-words');wl.innerHTML='';wsPlaced.forEach((p,i)=>{const s=document.createElement('span');s.textContent=p.word;if(wsFound.has(i))s.className='done';wl.appendChild(s);});
+}
+function wsTap(r,c){
+  if(wsSel.length===0){wsSel=[[r,c]];renderWordSearch();return;}
+  const [r0,c0]=wsSel[0];
+  if(r0===r&&c0===c){wsSel=[];renderWordSearch();return;}
+  const dr=Math.sign(r-r0),dc=Math.sign(c-c0),len=Math.max(Math.abs(r-r0),Math.abs(c-c0))+1;
+  const straight=(r0===r)||(c0===c)||(Math.abs(r-r0)===Math.abs(c-c0));
+  if(straight){const path=[];for(let k=0;k<len;k++)path.push([r0+dr*k,c0+dc*k]);const str=path.map(([rr,cc])=>wsGrid[rr][cc]).join('');const rev=str.split('').reverse().join('');
+    wsPlaced.forEach((p,i)=>{if(!wsFound.has(i)&&(p.word===str||p.word===rev)){const pc=p.cells.map(x=>x.join(','));const fc=path.map(x=>x.join(','));const fcr=[...fc].reverse();if(pc.join('|')===fc.join('|')||pc.join('|')===fcr.join('|'))wsFound.add(i);}});
+    if(wsFound.size===wsPlaced.length)document.getElementById('ws-msg').textContent='★ Every word found — well hunted!';}
+  wsSel=[];renderWordSearch();
+}
+function revealWordSearch(){wsRevealed=!wsRevealed;renderWordSearch();}
+
+/* MAZE */
+let mazeCells=[],mC=15,mR=19,mazeShow=false;
+document.getElementById('maze-size').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const m=b.dataset.m;mC={s:11,m:15,l:21}[m];mR={s:13,m:19,l:25}[m];[...e.currentTarget.children].forEach(x=>x.classList.toggle('on',x===b));newMaze();});
+function newMaze(){const C=mC,R=mR;const cells=Array.from({length:R},()=>Array.from({length:C},()=>({n:true,e:true,s:true,w:true,v:false})));const stack=[[0,0]];cells[0][0].v=true;const dirs=[['n',0,-1,'s'],['s',0,1,'n'],['e',1,0,'w'],['w',-1,0,'e']];while(stack.length){const [x,y]=stack[stack.length-1];const nb=[];for(const [d,dx,dy,opp] of dirs){const nx=x+dx,ny=y+dy;if(nx>=0&&nx<C&&ny>=0&&ny<R&&!cells[ny][nx].v)nb.push([d,nx,ny,opp]);}if(nb.length){const [d,nx,ny,opp]=nb[Math.floor(Math.random()*nb.length)];cells[y][x][d]=false;cells[ny][nx][opp]=false;cells[ny][nx].v=true;stack.push([nx,ny]);}else stack.pop();}mazeCells=cells;mazeShow=false;document.getElementById('maze-reveal-btn').textContent='Reveal path';renderMaze();}
+function solveMaze(){const C=mC,R=mR;const prev=Array.from({length:R},()=>Array(C).fill(null));const seen=Array.from({length:R},()=>Array(C).fill(false));const q=[[0,0]];seen[0][0]=true;while(q.length){const [x,y]=q.shift();if(x===C-1&&y===R-1)break;const cell=mazeCells[y][x];const moves=[];if(!cell.n)moves.push([x,y-1]);if(!cell.s)moves.push([x,y+1]);if(!cell.e)moves.push([x+1,y]);if(!cell.w)moves.push([x-1,y]);for(const [nx,ny] of moves){if(!seen[ny][nx]){seen[ny][nx]=true;prev[ny][nx]=[x,y];q.push([nx,ny]);}}}const path=[];let cur=[C-1,R-1];while(cur){path.push(cur);cur=prev[cur[1]][cur[0]];}return path;}
+function renderMaze(){const C=mC,R=mR;const m=document.getElementById('maze');m.style.gridTemplateColumns=`repeat(${C},1fr)`;m.style.width=Math.min(window.innerWidth*0.9,460)+'px';m.innerHTML='';const sol=mazeShow?new Set(solveMaze().map(([x,y])=>x+'_'+y)):new Set();for(let y=0;y<R;y++)for(let x=0;x<C;x++){const cell=mazeCells[y][x];const d=document.createElement('div');let cls='mcell';if(cell.n)cls+=' wn';if(cell.s)cls+=' ws';if(cell.e)cls+=' we';if(cell.w)cls+=' ww';if(x===0&&y===0)cls+=' start';if(x===C-1&&y===R-1)cls+=' end';if(sol.has(x+'_'+y)&&!(x===0&&y===0)&&!(x===C-1&&y===R-1))cls+=' sol';d.className=cls;if(x===0&&y===0)d.textContent='▲';if(x===C-1&&y===R-1)d.textContent='★';m.appendChild(d);}}
+function toggleMazeSolution(){mazeShow=!mazeShow;document.getElementById('maze-reveal-btn').textContent=mazeShow?'Hide path':'Reveal path';renderMaze();}
+
+/* BATTLESHIP (printable 2-player sheet) */
+const BS_N=10,BS_FLEET=[['Carrier',5],['Battleship',4],['Cruiser',3],['Submarine',3],['Destroyer',2]];
+function buildBsPrint(){
+  const letters='ABCDEFGHIJ';
+  ['bs-ptable-1','bs-ptable-2'].forEach(id=>{
+    const t=document.getElementById(id);let html='<tr><th></th>';
+    for(let j=1;j<=BS_N;j++)html+=`<th>${j}</th>`;html+='</tr>';
+    for(let i=0;i<BS_N;i++){html+=`<tr><th>${letters[i]}</th>`;for(let j=0;j<BS_N;j++)html+='<td></td>';html+='</tr>';}
+    t.innerHTML=html;
+  });
+  const lg=document.getElementById('bs-legend');
+  lg.innerHTML='<b>Fleet to draw (straight lines, no overlaps, no diagonals):</b>'+BS_FLEET.map(([n,l])=>`<div class="shipline">${'<span class="sq"></span>'.repeat(l)} ${n} (${l})</div>`).join('')+'<div style="margin-top:2mm">On “Enemy waters” mark ✕ for a hit and • for a miss. Call “hit”, “miss”, or “sunk” honestly — that’s the whole game.</div>';
+}
+
+/* LICENSE PLATES */
+const STATES=["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"];
+let platesFound=new Set();
+function renderPlates(){
+  const g=document.getElementById('plates-grid');g.innerHTML='';
+  STATES.forEach(st=>{
+    const b=document.createElement('button');b.className='plate'+(platesFound.has(st)?' on':'');
+    b.innerHTML=`<span class="box"></span>${st}`;
+    b.onclick=()=>{platesFound.has(st)?platesFound.delete(st):platesFound.add(st);renderPlates();};
+    g.appendChild(b);
+  });
+  document.getElementById('plates-count').textContent=`${platesFound.size} / 50`;
+}
+function resetPlates(){platesFound=new Set();renderPlates();}
+
+/* CRIBBAGE — one shared board */
+const PEG_COLORS=['#b8462f','#2f6b5e','#c89b3c','#244f46'];
+let cribMode=2,lines=[];
+function freshLines(mode){const cfg=mode===4?['Team 1','Team 2']:mode===3?['Player 1','Player 2','Player 3']:['Player 1','Player 2'];return cfg.map(n=>({name:n,score:0,prev:0,history:[]}));}
+function resetCribbage(){lines=freshLines(cribMode);renderCribbage();document.getElementById('crib-win').textContent='';}
+document.getElementById('crib-players').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;cribMode=+b.dataset.p;[...e.currentTarget.children].forEach(x=>x.classList.toggle('on',x===b));resetCribbage();});
+function peg(i,amt){const p=lines[i];const next=Math.max(0,Math.min(121,p.score+amt));if(next===p.score)return;p.history.push(p.score);p.prev=p.score;p.score=next;renderCribbage();document.getElementById('crib-win').textContent=p.score>=121?`🏆 ${p.name} wins at 121!`:'';}
+function undo(i){const p=lines[i];if(!p.history.length)return;p.score=p.history.pop();p.prev=p.history.length?p.history[p.history.length-1]:0;document.getElementById('crib-win').textContent='';renderCribbage();}
+function renderCribbage(){
+  /* header: name + live score per line */
+  const heads=document.getElementById('crib-heads');heads.innerHTML='';
+  lines.forEach((p,i)=>{
+    const color=PEG_COLORS[i%PEG_COLORS.length];
+    const h=document.createElement('div');h.className='crib-head';
+    h.innerHTML=`<span class="peg-dot" style="background:${color}"></span><input class="pname" value="${p.name}" onchange="lines[${i}].name=this.value;renderCribbage()"><span class="crib-score">${p.score}<small>/121</small></span>`;
+    heads.appendChild(h);
+  });
+
+  /* SVG board — ONE shared board, player tracks side by side:
+     outbound street (1–60) = adjacent columns, one per player;
+     return street (61–120) = adjacent columns mirrored, so U-turn arcs nest like a real board. */
+  const N=lines.length,P=3.4,G=2.2,R=1.5,CP=6,GAP=13,YT=21,X1=16;
+  const yAt=i=>YT+i*P+Math.floor(i/5)*G;
+  const YB=yAt(59);
+  const X2=X1+N*CP+GAP;
+  const outX=li=>X1+li*CP;
+  const backX=li=>X2+(N-1-li)*CP;
+  const rightmost=X2+(N-1)*CP;
+  const maxR=(backX(0)-outX(0))/2;
+  const H=YB+maxR+9, W=rightmost+16;
+  const midX=(X1+rightmost)/2;
+  const holeXY=(li,s)=>{
+    if(s<=0)return[outX(li),YT-5.4];
+    if(s<=60)return[outX(li),yAt(s-1)];
+    if(s<=120)return[backX(li),yAt(59-(s-61))];
+    return[midX,YT-11.5];
+  };
+  let svg='';
+  svg+=`<rect class="plank" x="1.5" y="1.5" width="${W-3}" height="${H-3}" rx="7"/>`;
+  /* shared finish hole */
+  svg+=`<circle class="holec finc" cx="${midX}" cy="${YT-11.5}" r="2.6"/><text class="lbl tiny" x="${midX}" y="${YT-15.6}" text-anchor="middle">FINISH 121</text>`;
+  /* first-hole hints: 1 at top-left, 61 at bottom-right */
+  svg+=`<text class="lbl" x="${X1-4.6}" y="${yAt(0)+1.15}" text-anchor="end">1 \u25BC</text>`;
+  svg+=`<text class="lbl" x="${rightmost+4.6}" y="${yAt(59)+1.15}">61 \u25B2</text>`;
+  /* shared mile-marker labels */
+  for(let h=10;h<=60;h+=10)svg+=`<text class="lbl" x="${X1-4.6}" y="${yAt(h-1)+1.15}" text-anchor="end">${h}</text>`;
+  for(let h=70;h<=120;h+=10)svg+=`<text class="lbl" x="${rightmost+4.6}" y="${yAt(59-(h-61))+1.15}">${h}</text>`;
+  /* per-player columns */
+  lines.forEach((p,li)=>{
+    const color=PEG_COLORS[li%PEG_COLORS.length];
+    /* color-coded start hole marks this player's out column; matching chip tops their back column */
+    svg+=`<circle class="holec startc" cx="${outX(li)}" cy="${YT-5.4}" r="1.7" stroke="${color}" style="stroke:${color};stroke-width:1.1"/>`;
+    svg+=`<rect class="laneband" x="${backX(li)-1.6}" y="${YT-6.8}" width="3.2" height="2.4" rx="1.2" fill="${color}"/>`;
+    /* streets */
+    for(let i=0;i<60;i++){
+      const y=yAt(i),hOut=i+1,hBack=120-i;
+      svg+=`<circle class="holec${hOut%10===0?' tensc':''}" cx="${outX(li)}" cy="${y}" r="${R}"/>`;
+      svg+=`<circle class="holec${hBack%10===0?' tensc':''}" cx="${backX(li)}" cy="${y}" r="${R}"/>`;
+    }
+    /* nested U-turn arc */
+    const r=(backX(li)-outX(li))/2;
+    svg+=`<path class="uturn" d="M ${outX(li)} ${YB+3} A ${r} ${r} 0 0 0 ${backX(li)} ${YB+3}"/>`;
+    /* pegs */
+    const [fx,fy]=holeXY(li,p.score);
+    if(p.prev!==p.score){const [bx,by]=holeXY(li,p.prev);svg+=`<circle class="pegdot backp" cx="${bx}" cy="${by}" r="1.3" fill="${color}"/>`;}
+    svg+=`<circle class="pegdot" cx="${fx}" cy="${fy}" r="1.3" fill="${color}"/>`;
+    if(p.score>=121)svg+=`<circle class="pegdot" cx="${midX+((li-(N-1)/2)*3)}" cy="${YT-11.5}" r="1.5" fill="${color}"/>`;
+  });
+  /* shared skunk lines across the whole return street */
+  const ySk=(yAt(29)+yAt(30))/2, yDs=YB+2.4, sx1=X2-2.8, sx2=rightmost+2.8;
+  svg+=`<line class="skunkline" x1="${sx1}" y1="${ySk}" x2="${sx2}" y2="${ySk}"/><text class="lbl skl" x="${sx1-1.4}" y="${ySk+1.2}" text-anchor="end">S</text>`;
+  svg+=`<line class="skunkline" x1="${sx1}" y1="${yDs}" x2="${sx2}" y2="${yDs}"/><text class="lbl skl" x="${sx1-1.4}" y="${yDs+1.2}" text-anchor="end">SS</text>`;
+  /* start label */
+  svg+=`<text class="lbl tiny" x="${X1-4.6}" y="${YT-4.3}" text-anchor="end">START</text>`;
+  document.getElementById('crib-panel').innerHTML=
+    `<svg id="crib-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">${svg}</svg>`;
+
+  /* one chip row per player */
+  const adds=document.getElementById('crib-adds');adds.innerHTML='';
+  lines.forEach((p,i)=>{
+    const color=PEG_COLORS[i%PEG_COLORS.length];
+    const row=document.createElement('div');row.className='crib-add no-print';
+    const who=document.createElement('span');who.className='who';who.innerHTML=`<span class="peg-dot" style="background:${color};width:12px;height:12px"></span>${p.name}`;
+    row.appendChild(who);
+    [1,2,3,4,5,6,8,10,12].forEach(n=>{const b=document.createElement('button');b.className='chip';b.textContent='+'+n;b.onclick=()=>peg(i,n);row.appendChild(b);});
+    const minus=document.createElement('button');minus.className='chip minus';minus.textContent='\u22121';minus.onclick=()=>peg(i,-1);row.appendChild(minus);
+    const u=document.createElement('button');u.className='chip undo';u.textContent='\u21B6';u.onclick=()=>undo(i);row.appendChild(u);
+    adds.appendChild(row);
+  });
+}
+/* BINGO TEXT AUTOFIT — shrink each cell's font until its text fits the box */
+function fitBingoStage(stageId){
+  const stage=document.getElementById(stageId);
+  if(!stage||!stage.offsetParent)return; /* hidden: refit on show/load */
+  stage.querySelectorAll('.bingo-cell').forEach(el=>{
+    if(el.classList.contains('free')||!el.textContent)return;
+    let fs=11,guard=0;el.style.fontSize=fs+'px';
+    while(el.scrollHeight>el.clientHeight&&fs>6&&guard<40){fs-=0.5;el.style.fontSize=fs+'px';guard++;}
+  });
+}
+
+/* YAHTZEE printable scorecard */
+function buildYahtzeePrint(){
+  const cats=[['Aces','Count & add only 1s'],['Twos','Count & add only 2s'],['Threes','Count & add only 3s'],['Fours','Count & add only 4s'],['Fives','Count & add only 5s'],['Sixes','Count & add only 6s'],['__sub','Upper subtotal'],['__bonus','Bonus — 35 if subtotal ≥ 63'],['__utot','Upper total'],['3 of a kind','Add all 5 dice'],['4 of a kind','Add all 5 dice'],['Full house','25'],['Sm. straight','30 (four in a row)'],['Lg. straight','40 (five in a row)'],['YAHTZEE','50 (five alike)'],['Chance','Add all 5 dice'],['Yahtzee bonus','+100 each extra'],['__grand','GRAND TOTAL']];
+  let html='<tr><th class="cat">Category</th><th class="how">How to score</th>';
+  for(let p=1;p<=6;p++)html+='<th>P'+p+'</th>';
+  html+='</tr>';
+  cats.forEach(([c,h])=>{const sum=c.indexOf('__')===0;html+=`<tr class="${sum?'sum':''}"><td class="cat">${sum?h:c}</td><td class="how">${sum?'':h}</td>${'<td></td>'.repeat(6)}</tr>`;});
+  document.getElementById('yz-table').innerHTML=html;
+}
+
+
+/* BOOT */
+newSudoku();
+initBingoThemes();newBingo();
+(function(){const sel=document.getElementById('diy-src');Object.keys(BINGO_THEMES).forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;sel.appendChild(o);});})();
+function loadDiyTheme(){const t=document.getElementById('diy-src').value;if(!t)return;const ta=document.getElementById('diy-items');ta.value=BINGO_THEMES[t].join('\n');ta.dispatchEvent(new Event('input'));const ti=document.getElementById('diy-title');if(!ti.value.trim()||ti.value==='Family Bingo')ti.value=t+' Bingo';}
+initWsThemes();newWordSearch();
+newMaze();
+buildBsPrint();
+renderPlates();
+buildYahtzeePrint();
+resetCribbage();
+window.addEventListener('load',()=>{fitBingoStage('bingo-stage');fitBingoStage('diy-stage');});
+window.addEventListener('resize',()=>{
+  if(document.getElementById('view-wordsearch').classList.contains('active'))renderWordSearch();
+  if(document.getElementById('view-maze').classList.contains('active'))renderMaze();
+  if(document.getElementById('view-bingo').classList.contains('active'))fitBingoStage('bingo-stage');
+  if(document.getElementById('view-diy').classList.contains('active'))fitBingoStage('diy-stage');
+});
+
+/* ===================== PRINTING ENGINE ===================== */
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+
+/* ---- stepper component (used in game tabs and the booklet builder) ---- */
+function getStp(key){const el=document.querySelector(`.stp[data-key="${key}"] .stp-v`);return el?(+el.textContent||0):0;}
+function setStp(key,n){const el=document.querySelector(`.stp[data-key="${key}"] .stp-v`);if(el){const stp=el.closest('.stp');const cap=stp&&stp.dataset.max?+stp.dataset.max:9;el.textContent=Math.max(0,Math.min(cap,n));}}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.stp-b');if(!b)return;
+  const stp=b.closest('.stp');const v=stp.querySelector('.stp-v');
+  const cap=+(stp.dataset.max)||9;v.textContent=Math.max(0,Math.min(cap,(+v.textContent||0)+(+b.dataset.d)));
+  onStp(stp.dataset.key);
+});
+document.addEventListener('change',e=>{if(e.target.closest('.kit-list'))bkEstimate();});
+function onStp(key){
+  if(key.startsWith('t-sud'))buildSudokuPrint();
+  else if(key.startsWith('t-ws'))buildWsPrint();
+  else if(key.startsWith('t-maze'))buildMazePrint();
+  else if(key.startsWith('t-bog'))buildBogglePrint();
+  else if(key.startsWith('t-cy'))buildCryptoPrint();
+  else if(key.startsWith('bk-'))bkEstimate();
+}
+
+/* ---- static renderers (print-safe, sized to fill Letter) ---- */
+function staticSudokuGrid(puzzle){
+  let cells='';
+  for(let r=0;r<9;r++)for(let c=0;c<9;c++){const v=puzzle[r][c];let cls='cell';if(v)cls+=' given';if(r%3===0&&r>0)cls+=' r3';if(c%3===0&&c>0)cls+=' c3';cells+=`<div class="${cls}">${v||''}</div>`;}
+  return `<div class="sudoku-wrap"><div class="sudoku spx">${cells}</div></div>`;
+}
+function genWordSearch(theme){
+  theme=theme||wsTheme;
+  const DIRS=[[0,1],[1,0],[1,1],[1,-1],[0,-1],[-1,0],[-1,-1],[-1,1]];
+  const words=shuffle(WS_THEMES[theme].slice());
+  let grid,placed,outer=0;
+  do{grid=Array.from({length:WS_N},()=>Array(WS_N).fill(''));placed=[];
+    for(const w of words){if(placed.length>=12)break;let done=false;
+      for(let a=0;a<120&&!done;a++){const [dr,dc]=DIRS[Math.floor(Math.random()*8)];const r0=Math.floor(Math.random()*WS_N),c0=Math.floor(Math.random()*WS_N);const re=r0+dr*(w.length-1),ce=c0+dc*(w.length-1);if(re<0||re>=WS_N||ce<0||ce>=WS_N)continue;let ok=true;const cells=[];for(let k=0;k<w.length;k++){const r=r0+dr*k,c=c0+dc*k;if(grid[r][c]&&grid[r][c]!==w[k]){ok=false;break;}cells.push([r,c]);}if(!ok)continue;cells.forEach(([r,c],k)=>grid[r][c]=w[k]);placed.push({word:w,cells});done=true;}}
+    outer++;
+  }while(placed.length<Math.min(10,words.length)&&outer<8);
+  const A="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  for(let r=0;r<WS_N;r++)for(let c=0;c<WS_N;c++)if(!grid[r][c])grid[r][c]=A[Math.floor(Math.random()*26)];
+  return {grid,placed};
+}
+function staticWsGrid(grid,placed){
+  let cells='';for(let r=0;r<WS_N;r++)for(let c=0;c<WS_N;c++)cells+=`<div class="ws-cell">${grid[r][c]}</div>`;
+  const words=placed.map(p=>`<span>${p.word}</span>`).join('');
+  return `<div class="ws-wrap"><div class="ws-grid wsp" style="grid-template-columns:repeat(${WS_N},15.5mm);--wsz:15.5mm">${cells}</div></div><div class="ws-words wsp-words">${words}</div>`;
+}
+function genMazeCells(C,R){
+  const cells=Array.from({length:R},()=>Array.from({length:C},()=>({n:true,e:true,s:true,w:true,v:false})));
+  const stack=[[0,0]];cells[0][0].v=true;const dirs=[['n',0,-1,'s'],['s',0,1,'n'],['e',1,0,'w'],['w',-1,0,'e']];
+  while(stack.length){const [x,y]=stack[stack.length-1];const nb=[];for(const [d,dx,dy,opp] of dirs){const nx=x+dx,ny=y+dy;if(nx>=0&&nx<C&&ny>=0&&ny<R&&!cells[ny][nx].v)nb.push([d,nx,ny,opp]);}if(nb.length){const [d,nx,ny,opp]=nb[Math.floor(Math.random()*nb.length)];cells[y][x][d]=false;cells[ny][nx][opp]=false;cells[ny][nx].v=true;stack.push([nx,ny]);}else stack.pop();}
+  return cells;
+}
+const MAZE_DEFS={s:{C:11,R:13,W:'182mm',label:'Small'},m:{C:15,R:19,W:'172mm',label:'Medium'},l:{C:21,R:25,W:'182mm',label:'Large'}};
+function staticMazeFromCells(cells,C,R,W){
+  let html='';
+  for(let y=0;y<R;y++)for(let x=0;x<C;x++){const cell=cells[y][x];let cls='mcell';if(cell.n)cls+=' wn';if(cell.s)cls+=' ws';if(cell.e)cls+=' we';if(cell.w)cls+=' ww';if(x===0&&y===0)cls+=' start';if(x===C-1&&y===R-1)cls+=' end';html+=`<div class="${cls}">${(x===0&&y===0)?'\u25B2':((x===C-1&&y===R-1)?'\u2605':'')}</div>`;}
+  return `<div class="maze-wrap"><div class="maze" style="grid-template-columns:repeat(${C},1fr);width:${W}">${html}</div></div>`;
+}
+function staticBingoCard(items,label){
+  const cells=makeCardFrom(items);let g='';
+  cells.forEach(cell=>{g+=`<div class="bingo-cell${cell.free?' free':''}">${cell.text}</div>`;});
+  return `<div class="bingo-card"><div class="bingo-top"><div class="word">${'BINGO'.split('').map(l=>`<b>${l}</b>`).join('')}</div><small>${label}</small></div><div class="bingo-grid">${g}</div><div class="bingo-foot">Glovebox &amp; Backpack Game Book</div></div>`;
+}
+function cloneInner(id){const el=document.getElementById(id);return el?el.innerHTML:'';}
+function ruleHTML(id){
+  const sec=document.getElementById('view-'+id);if(!sec)return'';
+  let h='';const intro=sec.querySelector('.rules-intro');if(intro)h+=intro.outerHTML;
+  const poker=sec.querySelector('.poker');if(poker)h+=poker.outerHTML;
+  const grid=sec.querySelector('.rules-grid');if(grid)h+=grid.outerHTML;
+  return h.replace(/<details/g,'<details open');
+}
+function spPage(cap,inner){return `<div class="sp-page"><div class="sp-cap">${cap}</div>${inner}</div>`;}
+
+/* ---- per-tab print builders: read tab steppers; if all zero, print one of the current selection ---- */
+const SUD_DIFFS=[['easy','Easy'],['medium','Medium'],['hard','Hard'],['expert','Expert']];
+function buildSudokuPrint(){
+  const box=document.getElementById('sudoku-print');if(!box)return;
+  let plan=SUD_DIFFS.map(([d,lab])=>[d,lab,getStp('t-sud-'+d)]);
+  if(plan.reduce((a,x)=>a+x[2],0)===0)plan=SUD_DIFFS.map(([d,lab])=>[d,lab,d===sDiff?1:0]);
+  let html='',idx=0,total=plan.reduce((a,x)=>a+x[2],0);
+  plan.forEach(([d,lab,n])=>{for(let i=0;i<n;i++){idx++;html+=spPage(`Sudoku \u00B7 ${lab}${total>1?' \u00B7 '+idx+'/'+total:''} \u2014 fill each row, column &amp; 3\u00D73 box with 1\u20139.`,staticSudokuGrid(makePuzzle(d).puzzle));}});
+  box.innerHTML=html;
+}
+function buildWsPrint(){
+  const box=document.getElementById('ws-print');if(!box)return;
+  const themes=Object.keys(WS_THEMES);
+  let plan=themes.map((t,i)=>[t,getStp('t-ws-'+i)]);
+  if(plan.reduce((a,x)=>a+x[1],0)===0)plan=themes.map(t=>[t,t===wsTheme?1:0]);
+  let html='',idx=0,total=plan.reduce((a,x)=>a+x[1],0);
+  plan.forEach(([t,n])=>{for(let i=0;i<n;i++){idx++;const s=genWordSearch(t);html+=spPage(`Word Search \u00B7 ${t}${total>1?' \u00B7 '+idx+'/'+total:''} \u2014 any direction, even backwards.`,staticWsGrid(s.grid,s.placed));}});
+  box.innerHTML=html;
+}
+function buildMazePrint(){
+  const box=document.getElementById('maze-print');if(!box)return;
+  let plan=['s','m','l'].map(k=>[k,getStp('t-maze-'+k)]);
+  if(plan.reduce((a,x)=>a+x[1],0)===0){const cur=({11:'s',15:'m',21:'l'})[mC]||'m';plan=['s','m','l'].map(k=>[k,k===cur?1:0]);}
+  let html='',idx=0,total=plan.reduce((a,x)=>a+x[1],0);
+  plan.forEach(([k,n])=>{const D=MAZE_DEFS[k];for(let i=0;i<n;i++){idx++;html+=spPage(`Maze \u00B7 ${D.label}${total>1?' \u00B7 '+idx+'/'+total:''} \u2014 find the path from \u25B2 to \u2605.`,staticMazeFromCells(genMazeCells(D.C,D.R),D.C,D.R,D.W));}});
+  box.innerHTML=html;
+}
+/* ---- WORD HUNT (Boggle-style) ---- */
+const BOG_DICE4=["AAEEGN","ABBJOO","ACHOPS","AFFKPS","AOOTTW","CIMOTU","DEILRX","DELRVY","DISTTY","EEGHNW","EEINSU","EHRTVW","EIOSST","ELRTTY","HIMNQU","HLNNRZ"];
+const BOG_BAG5="EEEEEEEEEEEETTTTTTTTTAAAAAAAAAOOOOOOOIIIIIIINNNNNNNSSSSSSHHHHHRRRRRRDDDDLLLLUUUCCCMMMFFYYWWGGPPBBVKXQJZ";
+function genBoggle(n){
+  if(n===4){const dice=shuffle(BOG_DICE4.slice());return dice.map(d=>d[Math.floor(Math.random()*6)]);}
+  const out=[];for(let i=0;i<25;i++)out.push(BOG_BAG5[Math.floor(Math.random()*BOG_BAG5.length)]);return out;
+}
+const bogTile=l=>l==='Q'?'Qu':l;
+let bogN=4;
+function newBoggle(){
+  const g=document.getElementById('bog-grid');if(!g)return;
+  const letters=genBoggle(bogN);
+  g.style.gridTemplateColumns=`repeat(${bogN},1fr)`;
+  g.innerHTML=letters.map(l=>`<div class="bog-tile">${bogTile(l)}</div>`).join('');
+}
+function staticBoggle(n){
+  const letters=genBoggle(n);
+  const cell=n===4?'34mm':'28mm';
+  const tiles=letters.map(l=>`<div class="bog-ptile">${bogTile(l)}</div>`).join('');
+  return `<div class="bog-pgrid" style="grid-template-columns:repeat(${n},${cell});grid-auto-rows:${cell}">${tiles}</div>`
+    +`<div class="bog-score">3–4 letters = 1 &nbsp;·&nbsp; 5 = 2 &nbsp;·&nbsp; 6 = 3 &nbsp;·&nbsp; 7 = 5 &nbsp;·&nbsp; 8+ = 11 &nbsp;·&nbsp; duplicates score zero</div>`
+    +`<div class="bog-lines"><div class="bog-col"></div><div class="bog-col"></div><div class="bog-col"></div></div>`;
+}
+function buildBogglePrint(){
+  const box=document.getElementById('boggle-print');if(!box)return;
+  let plan=[[4,getStp('t-bog-4')],[5,getStp('t-bog-5')]];
+  if(plan.reduce((a,x)=>a+x[1],0)===0)plan=[[bogN,1]];
+  let html='',idx=0,total=plan.reduce((a,x)=>a+x[1],0);
+  plan.forEach(([n,c])=>{for(let i=0;i<c;i++){idx++;html+=spPage(`Word Hunt \u00B7 ${n}\u00D7${n}${total>1?' \u00B7 '+idx+'/'+total:''} \u2014 3 minutes; chain touching tiles (diagonals count), no reusing a tile; 3-letter minimum.`,staticBoggle(n));}});
+  box.innerHTML=html;
+}
+
+/* ---- CRYPTOGRAMS ---- */
+const CY_QUOTES=["A SMOOTH SEA NEVER MADE A SKILLED SAILOR","THE EARLY BIRD CATCHES THE WORM","DO NOT COUNT YOUR CHICKENS BEFORE THEY HATCH","EVERY CLOUD HAS A SILVER LINING","ACTIONS SPEAK LOUDER THAN WORDS","A JOURNEY OF A THOUSAND MILES BEGINS WITH A SINGLE STEP","MAKE HAY WHILE THE SUN SHINES","STILL WATERS RUN DEEP","A WATCHED POT NEVER BOILS","WHEN IN ROME DO AS THE ROMANS DO","THE APPLE DOES NOT FALL FAR FROM THE TREE","PEOPLE IN GLASS HOUSES SHOULD NOT THROW STONES","A BIRD IN THE HAND IS WORTH TWO IN THE BUSH","DO NOT PUT ALL YOUR EGGS IN ONE BASKET","WHERE THERE IS SMOKE THERE IS FIRE","STRIKE WHILE THE IRON IS HOT","THE GRASS IS ALWAYS GREENER ON THE OTHER SIDE","PRACTICE MAKES PERFECT","FORTUNE FAVORS THE BOLD","MANY HANDS MAKE LIGHT WORK","TOO MANY COOKS SPOIL THE BROTH","THE SQUEAKY WHEEL GETS THE GREASE","YOU CANNOT JUDGE A BOOK BY ITS COVER","BETTER LATE THAN NEVER"];
+const CY_ALPHA="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+function genCipher(){
+  let map;
+  do{const arr=shuffle(CY_ALPHA.split(''));map={};let ok=true;
+    for(let i=0;i<26;i++){if(arr[i]===CY_ALPHA[i]){ok=false;break;}map[CY_ALPHA[i]]=arr[i];}
+    if(!ok)map=null;
+  }while(!map);
+  return map;
+}
+function genCrypto(exclude){
+  let q;do{q=pick(CY_QUOTES);}while(exclude&&exclude.includes(q));
+  const map=genCipher();
+  /* hint: reveal the most frequent letter in the quote */
+  const freq={};for(const ch of q)if(/[A-Z]/.test(ch))freq[ch]=(freq[ch]||0)+1;
+  const hint=Object.entries(freq).sort((a,b)=>b[1]-a[1])[0][0];
+  return {plain:q,map,hint};
+}
+function cyHTML(cz,i,forPrint){
+  const words=cz.plain.split(' ');
+  const w=words.map(word=>'<span class="cy-word">'+word.split('').map(ch=>`<span class="cy-cell"><span class="cy-top">${cz.map[ch]}</span><span class="cy-slot">${forPrint?'':'&nbsp;'}</span></span>`).join('')+'</span>').join(' ');
+  const hint=`<div class="cy-hint">Hint: every <b>${cz.map[cz.hint]}</b> is really <b>${cz.hint}</b></div>`;
+  return `<div class="cy-puz"><div class="cy-num">#${i}</div>${hint}<div class="cy-body">${w}</div></div>`;
+}
+let cyCurrent=null;
+function newCrypto(){
+  cyCurrent=genCrypto();
+  const st=document.getElementById('cy-stage');if(!st)return;
+  st.innerHTML=cyHTML(cyCurrent,1,false)
+    +`<details class="cheat" style="max-width:560px"><summary>Reveal answer</summary><div class="cheat-body"><p style="font-weight:800">${cyCurrent.plain}</p></div></details>`;
+}
+function buildCryptoPrint(){
+  const box=document.getElementById('crypto-print');if(!box)return;
+  let pages=getStp('t-cy');if(pages===0)pages=1;
+  let html='';
+  for(let p=0;p<pages;p++){
+    const puzzles=[];const used=[];
+    for(let k=0;k<3;k++){const cz=genCrypto(used);used.push(cz.plain);puzzles.push(cz);}
+    const body=puzzles.map((cz,i)=>cyHTML(cz,p*3+i+1,true)).join('');
+    const answers=`<div class="cy-answers">${puzzles.map((cz,i)=>`#${p*3+i+1}: ${cz.plain}`).join(' &nbsp;\u00B7&nbsp; ')}</div>`;
+    html+=spPage(`Cryptograms${pages>1?' \u00B7 page '+(p+1)+'/'+pages:''} \u2014 each letter stands for another; the swap is consistent within a puzzle. Answers upside-down below.`,body+answers);
+  }
+  box.innerHTML=html;
+}
+
+/* ---- booklet builder ---- */
+function bkItem(cap,inner,extraClass){return `<div class="bk-item${extraClass?' '+extraClass:''}"><div class="sp-cap">${cap}</div>${inner}</div>`;}
+const BK_RULEPAGES={rules:6,dice:4,paper:3,travel:3,campfire:3};
+function bkChecked(id){const el=document.getElementById('bk-'+id);return !!(el&&el.checked);}
+function bkStepTotal(){
+  let t=0;
+  SUD_DIFFS.forEach(([d])=>t+=getStp('bk-sud-'+d));
+  Object.keys(WS_THEMES).forEach((_,i)=>t+=getStp('bk-ws-'+i));
+  ['s','m','l'].forEach(k=>t+=getStp('bk-maze-'+k));
+  t+=getStp('bk-bog-4')+getStp('bk-bog-5')+getStp('bk-cy');
+  Object.keys(BINGO_THEMES).forEach((_,i)=>t+=getStp('bk-bng-'+i));
+  t+=getStp('bk-bs')+getStp('bk-yz');
+  return t;
+}
+function bkEstimate(){
+  const el=document.getElementById('bk-pages');if(!el)return;
+  let p=bkStepTotal();
+  if(bkChecked('plates'))p+=1;if(bkChecked('cribbage'))p+=1;
+  Object.entries(BK_RULEPAGES).forEach(([k,n])=>{if(bkChecked(k))p+=n;});
+  el.textContent=p===0?'Nothing selected yet':'\u2248 '+p+' page'+(p===1?'':'s');
+}
+function bkPreset(name){
+  /* zero everything first */
+  document.querySelectorAll('.stp[data-key^="bk-"] .stp-v').forEach(v=>v.textContent='0');
+  ['plates','cribbage','rules','dice','paper','travel','campfire'].forEach(k=>{const el=document.getElementById('bk-'+k);if(el)el.checked=false;});
+  const on=k=>{const el=document.getElementById('bk-'+k);if(el)el.checked=true;};
+  if(name==='day'){setStp('bk-sud-easy',1);setStp('bk-sud-medium',1);setStp('bk-ws-0',1);setStp('bk-maze-m',1);setStp('bk-bog-4',1);setStp('bk-cy',1);setStp('bk-bng-0',1);setStp('bk-bs',1);setStp('bk-yz',1);on('plates');}
+  else if(name==='haul'){setStp('bk-sud-easy',2);setStp('bk-sud-medium',2);setStp('bk-sud-hard',1);setStp('bk-ws-0',1);setStp('bk-ws-1',1);setStp('bk-ws-2',1);setStp('bk-maze-s',1);setStp('bk-maze-m',2);setStp('bk-maze-l',1);setStp('bk-bng-0',1);setStp('bk-bng-1',1);setStp('bk-bog-4',1);setStp('bk-bog-5',1);setStp('bk-cy',2);setStp('bk-bs',2);setStp('bk-yz',2);on('plates');on('cribbage');on('rules');on('dice');on('campfire');}
+  else if(name==='works'){SUD_DIFFS.forEach(([d])=>setStp('bk-sud-'+d,2));Object.keys(WS_THEMES).forEach((_,i)=>setStp('bk-ws-'+i,2));['s','m','l'].forEach(k=>setStp('bk-maze-'+k,2));Object.keys(BINGO_THEMES).forEach((_,i)=>setStp('bk-bng-'+i,1));setStp('bk-bog-4',2);setStp('bk-bog-5',2);setStp('bk-cy',3);setStp('bk-bs',2);setStp('bk-yz',2);['plates','cribbage','rules','dice','paper','travel','campfire'].forEach(on);}
+  bkEstimate();
+}
+function buildBooklet(){
+  const bk=document.getElementById('booklet');let html='';
+  SUD_DIFFS.forEach(([d,lab])=>{const n=getStp('bk-sud-'+d);for(let i=0;i<n;i++)html+=bkItem(`Sudoku \u00B7 ${lab} \u2014 fill each row, column &amp; 3\u00D73 box with 1\u20139.`,staticSudokuGrid(makePuzzle(d).puzzle));});
+  Object.keys(WS_THEMES).forEach((t,i)=>{const n=getStp('bk-ws-'+i);for(let k=0;k<n;k++){const s=genWordSearch(t);html+=bkItem(`Word Search \u00B7 ${t} \u2014 any direction, even backwards.`,staticWsGrid(s.grid,s.placed));}});
+  ['s','m','l'].forEach(kk=>{const n=getStp('bk-maze-'+kk);const D=MAZE_DEFS[kk];for(let i=0;i<n;i++)html+=bkItem(`Maze \u00B7 ${D.label} \u2014 find the path from \u25B2 to \u2605.`,staticMazeFromCells(genMazeCells(D.C,D.R),D.C,D.R,D.W));});
+  [[4,'bk-bog-4'],[5,'bk-bog-5']].forEach(([nn,key])=>{const n=getStp(key);for(let i=0;i<n;i++)html+=bkItem(`Word Hunt \u00B7 ${nn}\u00D7${nn} \u2014 3 minutes; chain touching tiles; 3-letter minimum.`,staticBoggle(nn));});
+  {const n=getStp('bk-cy');for(let p=0;p<n;p++){const puzzles=[];const used=[];for(let k=0;k<3;k++){const cz=genCrypto(used);used.push(cz.plain);puzzles.push(cz);}const body=puzzles.map((cz,i)=>cyHTML(cz,p*3+i+1,true)).join('');const answers=`<div class="cy-answers">${puzzles.map((cz,i)=>`#${p*3+i+1}: ${cz.plain}`).join(' \u00B7 ')}</div>`;html+=bkItem('Cryptograms \u2014 answers upside-down at the bottom.',body+answers);}}
+  Object.keys(BINGO_THEMES).forEach((t,i)=>{const n=getStp('bk-bng-'+i);for(let k=0;k<n;k++)html+=bkItem(`Spotting Bingo \u00B7 ${t} \u2014 five in a row wins.`,staticBingoCard(BINGO_THEMES[t],t));});
+  {const n=getStp('bk-bs');const bsInner=(document.querySelector('#view-battleship .bs-print')||{}).innerHTML||'';for(let i=0;i<n;i++)html+=bkItem('Battleship \u2014 one sheet per player.',`<div class="bs-print" style="display:block">${bsInner}</div>`);}
+  {const n=getStp('bk-yz');for(let i=0;i<n;i++)html+=bkItem('Yahtzee scorecard',`<table class="yz-table">${cloneInner('yz-table')}</table>`);}
+  if(bkChecked('plates'))html+=bkItem('License Plates \u2014 check off all 50.',`<div class="plates-grid">${cloneInner('plates-grid')}</div>`);
+  if(bkChecked('cribbage'))html+=bkItem('Cribbage board \u2014 race to 121; skunk at 91, double-skunk at 61.',`<div class="crib-panel crib-svgpanel">${cloneInner('crib-panel').replace('id="crib-svg"','class="crib-svg-bk"')}</div>`);
+  [['rules','Card Rules'],['dice','Dice Games'],['paper','Paper &amp; Pencil Games'],['travel','Car &amp; Travel Games'],['campfire','Campfire &amp; Camp Games']].forEach(([id,lab])=>{if(bkChecked(id))html+=`<div class="bk-item bk-rules"><h2>${lab}</h2>${ruleHTML(id)}</div>`;});
+  bk.innerHTML=html;
+  return html.length>0;
+}
+function printBooklet(){
+  const msg=document.getElementById('bk-msg');
+  if(!buildBooklet()){msg.textContent='Add at least one item first.';return;}
+  msg.textContent='Booklet ready \u2014 opening print\u2026';
+  window.print();
+}
+
+/* ---- print lifecycle ---- */
+let _detailsCache=null;
+window.addEventListener('beforeprint',()=>{
+  buildSudokuPrint();buildWsPrint();buildMazePrint();buildBogglePrint();buildCryptoPrint();
+  _detailsCache=[...document.querySelectorAll('details')].map(d=>d.open);
+  document.querySelectorAll('details').forEach(d=>{d.open=true;});
+});
+window.addEventListener('afterprint',()=>{
+  if(_detailsCache){document.querySelectorAll('details').forEach((d,i)=>{d.open=_detailsCache[i];});_detailsCache=null;}
+  const m=document.getElementById('bk-msg');if(m)m.textContent='';
+});
+function printPage(){window.print();}
+
+/* initial builds */
+newBoggle();newCrypto();
+document.getElementById('bog-size').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;bogN=+b.dataset.b;[...e.currentTarget.children].forEach(x=>x.classList.toggle('on',x===b));newBoggle();});
+buildSudokuPrint();buildWsPrint();buildMazePrint();buildBogglePrint();buildCryptoPrint();bkEstimate();
+
+</script>
+</body>
+</html>
