@@ -4,7 +4,7 @@
 
 **State** (2026-11-10): a small footer under every view (hidden in print) links the source on GitHub and says the code is MIT; the repo has the `LICENSE` (Jimmy, 2026-11-06: "I want people to be able to take this in the free and open source software ideology").
 
-**Next:** none for the site. **A merge goes live only by a deploy:** stage `index.html`, `favicon-32.png`, `favicon.ico`, `icon-192.png`, `icon-512.png` in a folder outside the repo and run `wrangler pages deploy <folder> --project-name games --branch main`. The Tools listing comes with the myjimmycloud.com front-page redo. A dated `Final` line goes here when Jimmy stamps it.
+**Next:** none for the site. **A merge goes live only by a deploy:** stage `index.html`, `favicon-32.png`, `favicon.ico`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png` in a folder outside the repo and run `wrangler pages deploy <folder> --project-name games --branch main`. The Tools listing comes with the myjimmycloud.com front-page redo. A dated `Final` line goes here when Jimmy stamps it.
 
 **Decided:** no `docs/design.md`; not worth one for a single page (finish lines, 2026-11-04). Cloudflare Pages over GitHub Pages for every myjimmycloud site (Jimmy, 2026-11-05).
 
